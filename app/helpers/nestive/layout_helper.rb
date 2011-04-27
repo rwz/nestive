@@ -111,11 +111,9 @@ module Nestive
     #
     # @param [Symbol] name
     #   A unique name to identify this block of content.
-    #
-    # @todo
-    #   Just realised that this methods doesn't accept a String, only a block.
-    def block(name, &block)
-      append(name, &block)
+    def block(name, content=nil, &block)
+      content = capture(&block) if block_given?
+      append(name, content)
       render_block(name)
     end
     
