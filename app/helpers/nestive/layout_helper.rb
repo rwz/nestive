@@ -184,22 +184,30 @@ module Nestive
     
     private
     
+    # append/prepend/replace will add instructions to an array for a given block name.
+    #
+    # @example
+    #   instruct_block(:sidebar, :push, "More content.")
     def instruct_block(name, instruction, value)
       @_block_for ||= {}
       @_block_for[name] ||= []
       @_block_for[name] << [instruction, value]
     end
     
+    # Take the instructions we've gaterhed for the block and replay them one after the other on
+    # an empty array. These instructions will push, unshift or replace items into our output Array,
+    # which we then join and mark as html_safe.
+    #
+    # These instructions are replayed when we render the block (rather than as they happen) due to
+    # way they are gathered by the layout extension process (in reverse).
+    #
+    # @todo is html_safe "safe" here?
     def render_block(name)
       output = []
-      instructions_for_block(name).each do |i|
+      (@_block_for[name] || []).reverse.each do |i|
         output.send(i.first, i.last)
       end
       output.join.html_safe
-    end
-    
-    def instructions_for_block(name)
-      instructions = (@_block_for[name] || []).reverse
     end
 
   end
