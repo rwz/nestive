@@ -111,6 +111,8 @@ module Nestive
     #
     # @param [Symbol] name
     #   A unique name to identify this block of content.
+    #
+    # @todo Method name bugs me... "block" is a confusing term given Ruby also has blocks. It's also not a verb like append, extend, etc. How about declare? assign? define?
     def block(name, content=nil, &block)
       content = capture(&block) if block_given?
       append(name, content)
