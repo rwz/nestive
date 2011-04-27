@@ -31,24 +31,24 @@ It's important to note that this isn't *default* content, it *is* the content (u
 
 Any layout (or view) can declare that it wants to inherit from and extend a parent layout, in this case we're extending `app/views/layouts/application.html.erb`:
 
-    <%= extends :application do %>
+    <%= extend :application do %>
        ...
     <% end %>
     
 You can nest many levels deep:
 
     # app/views/posts/index.html.erb
-    <%= extends :blog do %>
+    <%= extend :blog do %>
        ...
     <% end %>
     
     # app/views/layouts/blog.html.erb
-    <%= extends :public do %>
+    <%= extend :public do %>
        ...
     <% end %>
     
     # app/views/layouts/public.html.erb
-    <%= extends :application do %>
+    <%= extend :application do %>
        ...
     <% end %>
 
@@ -56,7 +56,7 @@ You can nest many levels deep:
 
 The implementation details are quite different, but the `append` helper works much like Rails' built-in `content_for`. It will work with either an argument or block, adding the new content onto the end of any content previously provided by parent layouts:
 
-    <%= extends :application do %>
+    <%= extend :application do %>
       <%= append :sidebar, "More content." %>
       <%= append :sidebar do %>
         More content.
@@ -67,7 +67,7 @@ The implementation details are quite different, but the `append` helper works mu
 
 Exactly what you think it is. The reverse of `append` (duh), adding the new content at the start of any content previously provided by parent layouts:
 
-    <%= extends :application do %>
+    <%= extend :application do %>
       <%= prepend :sidebar, "Content." %>
       <%= prepend :sidebar do %>
         Content.
@@ -78,7 +78,7 @@ Exactly what you think it is. The reverse of `append` (duh), adding the new cont
 
 You can also replace any content provided by parent layouts:
 
-<%= extends :application do %>
+<%= extend :application do %>
   <%= replace :sidebar, "New content." %>
   <%= replace :sidebar do %>
     New content.
@@ -119,7 +119,7 @@ Set-up a global layout defining some content blocks. Note that there is no `<% y
 Next, we set-up a `blog` layout that extends `application`, replacing, appending & prepending content to the blocks we defined earlier.
     
     # app/views/layouts/blog.html.erb
-    <%= extends :application do %>
+    <%= extend :application do %>
       <% replace :title, "My Blog – " %>
       <% replace :description, "Justin French blogs here on Ruby, Rails, Design, Formtastic, etc" %>
       <% prepend :keywords, "blog, weblog, design links, ruby links, formtastic release notes, " %>
@@ -128,7 +128,7 @@ Next, we set-up a `blog` layout that extends `application`, replacing, appending
 Now our blog index view can extend `blog` and fill in the blocks with content specific to the index action.
     
     # app/views/posts/index.html.erb
-    <%= extends :blog do %>
+    <%= extend :blog do %>
       <% replace :content do %>
         <h1>My Blog</h1>
         <% render @articles %>

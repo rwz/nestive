@@ -30,7 +30,7 @@ module Nestive
   # either an optional second argument, or with an ERB block):
   #
   #     # app/views/layouts/admin.html.erb
-  #     <%= extends :global do %>
+  #     <%= extend :global do %>
   #       <% prepend :title, "Admin :: " %>
   #       <% replace :sidebar do %>
   #         <h2>Quick Links</h2>
@@ -41,7 +41,7 @@ module Nestive
   #     <% end %>
   #
   #     # app/views/admin/posts/index.html.erb
-  #     <%= extends :admin do %>
+  #     <%= extend :admin do %>
   #       <% prepend :title, "Posts ::" %>
   #       <% replace :content do %>
   #         Normal view stuff goes here.
@@ -57,7 +57,7 @@ module Nestive
     # @example Extending the `application` layout to create an `admin` layout
     #
     #     # app/views/layouts/admin.html.erb
-    #     <%= extends :application do %>
+    #     <%= extend :application do %>
     #       ...
     #     <% end %>
     #
@@ -75,13 +75,14 @@ module Nestive
     #     end
     #
     #     # app/views/admin/posts/index.html.erb
-    #     <%= extends :admin do %>
+    #     <%= extend :admin do %>
     #       ...
     #     <% end %>
-    def extends(name, &block)
+    def extend(name, &block)
       capture(&block)
       render(:file => "layouts/#{name}")
     end
+    alias_method :extends, :extend
     
     # Defines a block of content in your layout that can be modified or replaced by child layouts 
     # that extend the current layout. You can optionally add content to the block using either a 
@@ -103,7 +104,7 @@ module Nestive
     #     <% end %>
     #
     # @example Define a block in a child layout:
-    #     <%= extends :global do %>
+    #     <%= extend :global do %>
     #       <%= block :sidebar do %>
     #         Some content.
     #       <% end %>
