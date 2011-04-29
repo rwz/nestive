@@ -123,6 +123,11 @@ module Nestive
       render_area(name)
     end
     
+    def block(name, content=nil, &block)
+      ActiveSupport::Deprecation.warn("block() is deprecated and will be removed very soon, please use area() instead")
+      area(name, content, &block)
+    end
+    
     # Appends content to an area previously defined or modified in parent layout(s). You can provide 
     # the content using either a String, or a block.
     #
