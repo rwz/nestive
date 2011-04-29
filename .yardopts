@@ -1,6 +1,8 @@
 --no-private
 --markup markdown
---title "Nestive Nested Layouts Plugin for Rails"
+--title "Nestive — Nested Layouts Plugin for Rails"
+--main "README.md"
+--files MIT-LICENSE
+--no-highlight
 app/**/*.rb 
-lib/**/*.rb -
-MIT-LICENSE
+lib/**/*.rb
