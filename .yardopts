@@ -1,0 +1,6 @@
+--no-private
+--markup markdown
+--title "Nestive Nested Layouts Plugin for Rails"
+app/**/*.rb 
+lib/**/*.rb -
+MIT-LICENSE
