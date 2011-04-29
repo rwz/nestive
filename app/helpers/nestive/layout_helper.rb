@@ -141,7 +141,7 @@ module Nestive
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def append(name, content=nil, &block)
       content = capture(&block) if block_given?
-      instruct_area(name, :push, content)
+      add_instruction_to_area(name, :push, content)
     end
 
     # Prepends content to an area previously declared or modified in parent layout(s). You can 
@@ -162,7 +162,7 @@ module Nestive
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def prepend(name, content=nil, &block)
       content = capture(&block) if block_given?
-      instruct_area(name, :unshift, content)
+      add_instruction_to_area(name, :unshift, content)
     end
     
     # Replaces the content of an area previously declared or modified in parent layout(s). You can 
@@ -183,29 +183,39 @@ module Nestive
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def replace(name, content=nil, &block)
       content = capture(&block) if block_given?
-      instruct_area(name, :replace, [content])
+      add_instruction_to_area(name, :replace, [content])
     end
     
     private
     
-    # append/prepend/replace will add instructions to an array for a given area name.
+    # We record the instructions (declaring, appending, prepending and replacing) for an area of
+    # content into an array that we can later retrieve and replay. Instructions are stored in an
+    # instance variable Hash `@_area_for`, with each key representing an area name, and each value 
+    # an Array of instructions. Each instruction is a two element array containing a instruction 
+    # method (eg `:push`, `:unshift`, `:replace`) and a value (content String).
+    #
+    #     @_area_for[:sidebar] # => [ [:push,"World"], [:unshift,"Hello"] ]
+    #
+    # Due to the way we extend layouts (render the parent layout after the child), the instructions
+    # are captured in reverse order. `render_area` reversed them and plays them back at rendering 
+    # time.
     #
     # @example
-    #   instruct_area(:sidebar, :push, "More content.")
-    def instruct_area(name, instruction, value)
+    #   add_instruction_to_area(:sidebar, :push, "More content.")
+    def add_instruction_to_area(name, instruction, value)
       @_area_for ||= {}
       @_area_for[name] ||= []
       @_area_for[name] << [instruction, value]
     end
     
-    # Take the instructions we've gahtered for the area and replay them one after the other on
+    # Take the instructions we've gathered for the area and replay them one after the other on
     # an empty array. These instructions will push, unshift or replace items into our output array,
     # which we then join and mark as html_safe.
     #
     # These instructions are reversed and replayed when we render the block (rather than as they 
     # happen) due to the way they are gathered by the layout extension process (in reverse).
     #
-    # @todo is html_safe "safe" here?
+    # @todo is `html_safe` "safe" here?
     def render_area(name)
       output = []
       (@_area_for[name] || []).reverse.each do |i|
