@@ -9,15 +9,15 @@ Nestive adds powerful layout and view helpers to your Rails app. It's similar to
 
 Nestive is *better* because it addresses these problems.
 
-## Just five methods (so far) – `block`, `extends`, `append`, `prepend`, `replace`.
+## Just five methods (so far) – `area`, `extend`, `append`, `prepend`, `replace`.
 
-### Defining a block of content in your parent layout with `block`:
+### Declaring an area of content in your parent layout with `area`:
 
-The `block` helper is a lot like Rails' own `<%= yield :foo %>`, and is used in layouts to define and render a chunk of content in your layout:
+The `area` helper is a lot like Rails' own `<%= yield :foo %>`, and is used in layouts to define and render a chunk of content in your layout:
 
     <%= area :sidebar %>
     
-Unlike `yield`, `block` will allow your parent layouts to add content to the block at the same time using either a second argument or a block:
+Unlike `yield`, `area` will allow your parent layouts to add content to the area at the same time using either a String or a block:
 
     <%= area :sidebar, "Some Content Here" %>
 
@@ -52,9 +52,9 @@ You can nest many levels deep:
        ...
     <% end %>
 
-### Appending content to a block:
+### Appending content to an area:
 
-The implementation details are quite different, but the `append` helper works much like Rails' built-in `content_for`. It will work with either an argument or block, adding the new content onto the end of any content previously provided by parent layouts:
+The implementation details are quite different, but the `append` helper works much like Rails' built-in `content_for`. It will work with either a String or block, adding the new content onto the end of any content previously provided by parent layouts:
 
     <%= extend :application do %>
       <%= append :sidebar, "More content." %>
@@ -63,7 +63,7 @@ The implementation details are quite different, but the `append` helper works mu
       <% end %>
     <% end %>
 
-### Prepending content to a block:
+### Prepending content to an area:
 
 Exactly what you think it is. The reverse of `append` (duh), adding the new content at the start of any content previously provided by parent layouts:
 
@@ -78,17 +78,17 @@ Exactly what you think it is. The reverse of `append` (duh), adding the new cont
 
 You can also replace any content provided by parent layouts:
 
-<%= extend :application do %>
-  <%= replace :sidebar, "New content." %>
-  <%= replace :sidebar do %>
-    New content.
-  <% end %>
-<% end %>
+    <%= extend :application do %>
+      <%= replace :sidebar, "New content." %>
+      <%= replace :sidebar do %>
+        New content.
+      <% end %>
+    <% end %>
 
 
 ## The token blog example
 
-Set-up a global layout defining some content blocks. Note that there is no `<% yield %>` here.
+Set-up a global layout defining some content areas. Note that there is no `<% yield %>` here.
     
     # app/views/layouts/application.html.erb
     <!DOCTYPE html>
@@ -116,7 +116,7 @@ Set-up a global layout defining some content blocks. Note that there is no `<% y
     </body>
     </html>
     
-Next, we set-up a `blog` layout that extends `application`, replacing, appending & prepending content to the blocks we defined earlier.
+Next, we set-up a `blog` layout that extends `application`, replacing, appending & prepending content to the areas we defined earlier.
     
     # app/views/layouts/blog.html.erb
     <%= extend :application do %>
@@ -125,7 +125,7 @@ Next, we set-up a `blog` layout that extends `application`, replacing, appending
       <% prepend :keywords, "blog, weblog, design links, ruby links, formtastic release notes, " %>
     <% end %>
 
-Now our blog index view can extend `blog` and fill in the blocks with content specific to the index action.
+Now our blog index view can extend `blog` and fill in the areas with content specific to the index action.
     
     # app/views/posts/index.html.erb
     <%= extend :blog do %>
