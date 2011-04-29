@@ -3,20 +3,20 @@ module Nestive
   # The Nestive LayoutHelper provides a handful of helper methods for use in your layouts and views.
   #
   # See the documentation for each individual method for detailed information, but at a high level, 
-  # your parent layouts define blocks of content. You can define a block and add content to that 
-  # block at the same time using either an optional second param, or an ERB block:
+  # your parent layouts define `area`s of content. You can define an area and optionally add content 
+  # to it at the same time using either a String, or a block:
   #
   #     # app/views/layouts/global.html.erb
   #     <html>
   #       <head>
-  #         <title><%= block :title, "MySite.com" %></title>
+  #         <title><%= area :title, "MySite.com" %></title>
   #       </head>
   #       <body>
   #         <div id="content">
-  #           <%= block :content %>
+  #           <%= area :content %>
   #         </div>
   #         <div id="sidebar">
-  #           <%= block :sidebar do %>
+  #           <%= area :sidebar do %>
   #             <h2>About MySite.com</h2>
   #             <p>...</p>
   #           <% end %>
@@ -24,10 +24,13 @@ module Nestive
   #       </body>
   #     </html>
   #
-  # Your child layouts (or views) extend the parent with an ERB block. You can then either `append`,
-  # `prepend` or `replace` the content previously assigned to each block by parent layouts (these 
-  # methods are similar to Rails' `content_for`, which accept content for the named block with 
-  # either an optional second argument, or with an ERB block):
+  # Your child layouts (or views) inherit and modify the parent by wrapping in an `extend` block 
+  # helper. You can then either `append`, `prepend` or `replace` the content that has previously 
+  # been assigned to each area by parent layouts.
+  #
+  # The `append`, `prepend` or `replace` helpers are *similar* to Rails' own `content_for`, which 
+  # accepts content for the named area with either a String or with a block). They're different to
+  # `content_for` because they're only used modify the content assigned to the area, not retrieve it:
   #
   #     # app/views/layouts/admin.html.erb
   #     <%= extend :global do %>
@@ -84,128 +87,128 @@ module Nestive
     end
     alias_method :extends, :extend
     
-    # Defines a block of content in your layout that can be modified or replaced by child layouts 
-    # that extend the current layout. You can optionally add content to the block using either a 
-    # second argument String, or as an ERB block.
+    # Defines an area of content in your layout that can be modified or replaced by child layouts 
+    # that extend it. You can optionally add content to an area using either a String, or a block.
     #
-    # Blocks are defined in the parent layout and modified by the child layouts, but since Nestive
-    # allows for multiple levels of extended layouts, a child layout can define a block for it's
+    # Areas are declared in a parent layout and modified by a child layout, but since Nestive
+    # allows for multiple levels of inheritance, a child layout can also declare an area for it's
     # children to modify.
     #
-    # @example Define a block without adding content to it:
-    #     <%= block :sidebar %>
+    # @example Define an area without adding content to it:
+    #     <%= area :sidebar %>
     #
-    # @example Define a block and add a String of content to it:
-    #     <%= block :sidebar, "Some content." %>
+    # @example Define an area and add a String of content to it:
+    #     <%= area :sidebar, "Some content." %>
     #
-    # @example Define a block and add content to it with an ERB block:
-    #     <%= block :sidebar do %>
+    # @example Define an area and add content to it with a block:
+    #     <%= area :sidebar do %>
     #       Some content.
     #     <% end %>
     #
-    # @example Define a block in a child layout:
+    # @example Define an area in a child layout:
     #     <%= extend :global do %>
-    #       <%= block :sidebar do %>
+    #       <%= area :sidebar do %>
     #         Some content.
     #       <% end %>
     #     <% end %>
     #
     # @param [Symbol] name
-    #   A unique name to identify this block of content.
+    #   A unique name to identify this area of content.
     #
-    # @todo Method name bugs me... "block" is a confusing term given Ruby also has blocks. It's also not a verb like append, extend, etc. How about declare? assign? define?
-    def block(name, content=nil, &block)
+    # @param [String] content
+    #   An optional String of content to add to the area as you declare it.
+    def area(name, content=nil, &block)
       content = capture(&block) if block_given?
       append(name, content)
-      render_block(name)
+      render_area(name)
     end
     
-    # Appends content to a block previously defined or modified in parent layout(s). You can provide 
-    # the content using either a String, or an ERB block.
+    # Appends content to an area previously defined or modified in parent layout(s). You can provide 
+    # the content using either a String, or a block.
     #
     # @example Appending content with a String
     #     <% append :sidebar, "Some content." %>
     #
-    # @example Appending content with an ERB block:
+    # @example Appending content with a block:
     #     <% append :sidebar do %>
     #       Some content.
     #     <% end %>
     #
     # @param [Symbol] name
-    #   A name to identify the block of content you wish to append to
+    #   A name to identify the area of content you wish to append to
     #
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def append(name, content=nil, &block)
       content = capture(&block) if block_given?
-      instruct_block(name, :push, content)
+      instruct_area(name, :push, content)
     end
 
-    # Prepends content to a block previously defined or modified in parent layout(s). You can provide 
-    # the content using either a String, or an ERB block.
+    # Prepends content to an area previously declared or modified in parent layout(s). You can 
+    # provide the content using either a String, or a block.
     #
     # @example Prepending content with a String
     #     <% prepend :sidebar, "Some content." %>
     #
-    # @example Prepending content with an ERB block:
+    # @example Prepending content with a block:
     #     <% prepend :sidebar do %>
     #       Some content.
     #     <% end %>
     #
     # @param [Symbol] name
-    #   A name to identify the block of content you wish to prepend to
+    #   A name to identify the area of content you wish to prepend to
     #
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def prepend(name, content=nil, &block)
       content = capture(&block) if block_given?
-      instruct_block(name, :unshift, content)
+      instruct_area(name, :unshift, content)
     end
     
-    # Replaces content to in block previously defined or modified in parent layout(s). You can provide 
-    # the content using either a String, or an ERB block.
+    # Replaces the content of an area previously declared or modified in parent layout(s). You can 
+    # provide the content using either a String, or a block.
     #
     # @example Prepending content with a String
     #     <% replace :sidebar, "New content." %>
     #
-    # @example Prepending content with an ERB block:
+    # @example Prepending content with a block:
     #     <% replace :sidebar do %>
     #       New content.
     #     <% end %>
     #
     # @param [Symbol] name
-    #   A name to identify the block of content you wish to replace
+    #   A name to identify the area of content you wish to replace
     #
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def replace(name, content=nil, &block)
       content = capture(&block) if block_given?
-      instruct_block(name, :replace, [content])
+      instruct_area(name, :replace, [content])
     end
     
     private
     
-    # append/prepend/replace will add instructions to an array for a given block name.
+    # append/prepend/replace will add instructions to an array for a given area name.
     #
     # @example
-    #   instruct_block(:sidebar, :push, "More content.")
-    def instruct_block(name, instruction, value)
-      @_block_for ||= {}
-      @_block_for[name] ||= []
-      @_block_for[name] << [instruction, value]
+    #   instruct_area(:sidebar, :push, "More content.")
+    def instruct_area(name, instruction, value)
+      @_area_for ||= {}
+      @_area_for[name] ||= []
+      @_area_for[name] << [instruction, value]
     end
     
-    # Take the instructions we've gaterhed for the block and replay them one after the other on
-    # an empty array. These instructions will push, unshift or replace items into our output Array,
+    # Take the instructions we've gahtered for the area and replay them one after the other on
+    # an empty array. These instructions will push, unshift or replace items into our output array,
     # which we then join and mark as html_safe.
     #
-    # These instructions are replayed when we render the block (rather than as they happen) due to
-    # way they are gathered by the layout extension process (in reverse).
+    # These instructions are reversed and replayed when we render the block (rather than as they 
+    # happen) due to the way they are gathered by the layout extension process (in reverse).
     #
     # @todo is html_safe "safe" here?
-    def render_block(name)
+    def render_area(name)
       output = []
-      (@_block_for[name] || []).reverse.each do |i|
+      (@_area_for[name] || []).reverse.each do |i|
         output.send(i.first, i.last)
       end
       output.join.html_safe

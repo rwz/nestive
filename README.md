@@ -15,13 +15,13 @@ Nestive is *better* because it addresses these problems.
 
 The `block` helper is a lot like Rails' own `<%= yield :foo %>`, and is used in layouts to define and render a chunk of content in your layout:
 
-    <%= block :sidebar %>
+    <%= area :sidebar %>
     
 Unlike `yield`, `block` will allow your parent layouts to add content to the block at the same time using either a second argument or a block:
 
-    <%= block :sidebar, "Some Content Here" %>
+    <%= area :sidebar, "Some Content Here" %>
 
-    <%= block :sidebar do %>
+    <%= area :sidebar do %>
       Some Content Here
     <% end %>
     
@@ -95,19 +95,19 @@ Set-up a global layout defining some content blocks. Note that there is no `<% y
     <html>
     <head>
       <meta charset="utf-8">
-      <title><%= block :title %> JustinFrench.com</title>
-      <meta name="description" content="<%= block :description, "This is my website." %>">
-      <meta name="keywords" content="<%= block :keywords, "justin, french, ruby, design" %>">
+      <title><%= area :title %> JustinFrench.com</title>
+      <meta name="description" content="<%= area :description, "This is my website." %>">
+      <meta name="keywords" content="<%= area :keywords, "justin, french, ruby, design" %>">
     </head>
     <body>
       <div id="wrapper">
         <div id="content">
-          <%= block :content do %>
+          <%= area :content do %>
             <p>Default content goes here.</p>
           <% end %>
         </div>
         <div id="sidebar">
-          <%= block :sidebar do %>
+          <%= area :sidebar do %>
             <h2>About Me</h2>
             <p>...</p>
           <% end %>
