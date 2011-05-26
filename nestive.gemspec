@@ -18,6 +18,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.6}
 
-  s.add_dependency(%q<rails>, ["~> 3.1.0.pre"])
+  s.add_dependency(%q<rails>, ["~> 3.0"])
 
 end
