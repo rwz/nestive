@@ -33,7 +33,7 @@ module Nestive
   # `content_for` because they're only used modify the content assigned to the area, not retrieve it:
   #
   #     # app/views/layouts/admin.html.erb
-  #     <%= extend :global do %>
+  #     <%= extends :global do %>
   #       <% prepend :title, "Admin :: " %>
   #       <% replace :sidebar do %>
   #         <h2>Quick Links</h2>
@@ -44,7 +44,7 @@ module Nestive
   #     <% end %>
   #
   #     # app/views/admin/posts/index.html.erb
-  #     <%= extend :admin do %>
+  #     <%= extends :admin do %>
   #       <% prepend :title, "Posts ::" %>
   #       <% replace :content do %>
   #         Normal view stuff goes here.
@@ -60,7 +60,7 @@ module Nestive
     # @example Extending the `application` layout to create an `admin` layout
     #
     #     # app/views/layouts/admin.html.erb
-    #     <%= extend :application do %>
+    #     <%= extends :application do %>
     #       ...
     #     <% end %>
     #
@@ -78,14 +78,13 @@ module Nestive
     #     end
     #
     #     # app/views/admin/posts/index.html.erb
-    #     <%= extend :admin do %>
+    #     <%= extends :admin do %>
     #       ...
     #     <% end %>
-    def extend(name, &block)
+    def extends(name, &block)
       capture(&block)
       render(:file => "layouts/#{name}")
     end
-    alias_method :extends, :extend
     
     # Defines an area of content in your layout that can be modified or replaced by child layouts 
     # that extend it. You can optionally add content to an area using either a String, or a block.
@@ -106,7 +105,7 @@ module Nestive
     #     <% end %>
     #
     # @example Define an area in a child layout:
-    #     <%= extend :global do %>
+    #     <%= extends :global do %>
     #       <%= area :sidebar do %>
     #         Some content.
     #       <% end %>
