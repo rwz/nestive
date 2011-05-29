@@ -24,7 +24,7 @@ module Nestive
   #       </body>
   #     </html>
   #
-  # Your child layouts (or views) inherit and modify the parent by wrapping in an `extend` block 
+  # Your child layouts (or views) inherit and modify the parent by wrapping in an `extends` block 
   # helper. You can then either `append`, `prepend` or `replace` the content that has previously 
   # been assigned to each area by parent layouts.
   #
