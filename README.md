@@ -166,6 +166,13 @@ Or for every controller:
 We'll find a way to make this easier or a bit more obvious in a future version.
 
 
+## Installation
+
+* add `gem 'nestive', '~> 0.1'` to your gemfile
+* run `bundle`
+* add `layout nil` to ApplicationController or the specific controllers you want to use Nestive on (see above)
+
+
 ## TODO
 
 * Figure out how to test it
@@ -175,12 +182,18 @@ We'll find a way to make this easier or a bit more obvious in a future version.
 
 ## Compatibility
 
-Only testing it with Rails 3.1 (master), but it should work with Rails 2 & 3. We don't monkey patch or fiddle with any default behaviors in Rails. Use it when you want to, don't when you don't.
+Only testing it with Rails 3.1 RCs right now, but it should work with Rails 2 & 3. The dependency is set to ~> 3.0 right now, will change to 2.x when someone can test it works.
+
+*Nestive doesn't monkey patch or fiddle with any default behaviors in Rails.* Use it when you want to, don't when you don't.
 
 ## You can help with...
 
 * feedback
 * reporting issues
-* real-world use-cases
-* ideas, forks, pull-requests
+* fixing issues with pull requests
 * performance testing
+
+## Twitter
+
+* [@nestivegem](http://twitter.com/nestivegem)
+* [@justinfrench](http://twitter.com/justinfrench)
