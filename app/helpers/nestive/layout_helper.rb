@@ -146,6 +146,7 @@ module Nestive
     def append(name, content=nil, &block)
       content = capture(&block) if block_given?
       add_instruction_to_area(name, :push, content)
+      nil
     end
 
     # Prepends content to an area previously declared or modified in parent layout(s). You can 
@@ -167,6 +168,7 @@ module Nestive
     def prepend(name, content=nil, &block)
       content = capture(&block) if block_given?
       add_instruction_to_area(name, :unshift, content)
+      nil
     end
     
     # Replaces the content of an area previously declared or modified in parent layout(s). You can 
@@ -188,6 +190,7 @@ module Nestive
     def replace(name, content=nil, &block)
       content = capture(&block) if block_given?
       add_instruction_to_area(name, :replace, [content])
+      nil
     end
     
     private
