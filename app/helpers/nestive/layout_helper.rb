@@ -1,9 +1,9 @@
 module Nestive
-  
+
   # The Nestive LayoutHelper provides a handful of helper methods for use in your layouts and views.
   #
-  # See the documentation for each individual method for detailed information, but at a high level, 
-  # your parent layouts define `area`s of content. You can define an area and optionally add content 
+  # See the documentation for each individual method for detailed information, but at a high level,
+  # your parent layouts define `area`s of content. You can define an area and optionally add content
   # to it at the same time using either a String, or a block:
   #
   #     # app/views/layouts/global.html.erb
@@ -24,11 +24,11 @@ module Nestive
   #       </body>
   #     </html>
   #
-  # Your child layouts (or views) inherit and modify the parent by wrapping in an `extends` block 
-  # helper. You can then either `append`, `prepend` or `replace` the content that has previously 
+  # Your child layouts (or views) inherit and modify the parent by wrapping in an `extends` block
+  # helper. You can then either `append`, `prepend` or `replace` the content that has previously
   # been assigned to each area by parent layouts.
   #
-  # The `append`, `prepend` or `replace` helpers are *similar* to Rails' own `content_for`, which 
+  # The `append`, `prepend` or `replace` helpers are *similar* to Rails' own `content_for`, which
   # accepts content for the named area with either a String or with a block). They're different to
   # `content_for` because they're only used modify the content assigned to the area, not retrieve it:
   #
@@ -51,7 +51,7 @@ module Nestive
   #       <% end %>
   #     <% end %>
   module LayoutHelper
-    
+
     # Declares that the current layour (or view) is inheriting from and extending another layout.
     #
     # @param [Symbol] name
@@ -70,10 +70,10 @@ module Nestive
     #     class Admin::PostsController < ApplicationController
     #       # You can disable Rails' layout rendering for all actions
     #       layout nil
-    #       
+    #
     #       # Or disable Rails' layout rendering per-controller
     #       def index
-    #         render :layout => nil 
+    #         render :layout => nil
     #       end
     #     end
     #
@@ -81,12 +81,20 @@ module Nestive
     #     <%= extends :admin do %>
     #       ...
     #     <% end %>
-    def extends(name, &block)
-      capture(&block)
-      render(:file => "layouts/#{name}")
+    def extends(layout, &block)
+      # Make sure it's a string
+      layout = layout.to_s
+
+      # If there's no directory component, presume a plain layout name
+      layout = layout.include?('/') ? layout : "layouts/#{layout}"
+
+      # Capture the content to be placed inside the extended layout
+      content_for :layout, capture(&block)
+
+      render :file => layout
     end
-    
-    # Defines an area of content in your layout that can be modified or replaced by child layouts 
+
+    # Defines an area of content in your layout that can be modified or replaced by child layouts
     # that extend it. You can optionally add content to an area using either a String, or a block.
     #
     # Areas are declared in a parent layout and modified by a child layout, but since Nestive
@@ -121,13 +129,13 @@ module Nestive
       append(name, content)
       render_area(name)
     end
-    
+
     def block(name, content=nil, &block)
       ActiveSupport::Deprecation.warn("block() is deprecated and will be removed very soon, please use area() instead")
       area(name, content, &block)
     end
-    
-    # Appends content to an area previously defined or modified in parent layout(s). You can provide 
+
+    # Appends content to an area previously defined or modified in parent layout(s). You can provide
     # the content using either a String, or a block.
     #
     # @example Appending content with a String
@@ -149,7 +157,7 @@ module Nestive
       nil
     end
 
-    # Prepends content to an area previously declared or modified in parent layout(s). You can 
+    # Prepends content to an area previously declared or modified in parent layout(s). You can
     # provide the content using either a String, or a block.
     #
     # @example Prepending content with a String
@@ -170,8 +178,8 @@ module Nestive
       add_instruction_to_area(name, :unshift, content)
       nil
     end
-    
-    # Replaces the content of an area previously declared or modified in parent layout(s). You can 
+
+    # Replaces the content of an area previously declared or modified in parent layout(s). You can
     # provide the content using either a String, or a block.
     #
     # @example Prepending content with a String
@@ -192,19 +200,19 @@ module Nestive
       add_instruction_to_area(name, :replace, [content])
       nil
     end
-    
+
     private
-    
+
     # We record the instructions (declaring, appending, prepending and replacing) for an area of
     # content into an array that we can later retrieve and replay. Instructions are stored in an
-    # instance variable Hash `@_area_for`, with each key representing an area name, and each value 
-    # an Array of instructions. Each instruction is a two element array containing a instruction 
+    # instance variable Hash `@_area_for`, with each key representing an area name, and each value
+    # an Array of instructions. Each instruction is a two element array containing a instruction
     # method (eg `:push`, `:unshift`, `:replace`) and a value (content String).
     #
     #     @_area_for[:sidebar] # => [ [:push,"World"], [:unshift,"Hello"] ]
     #
     # Due to the way we extend layouts (render the parent layout after the child), the instructions
-    # are captured in reverse order. `render_area` reversed them and plays them back at rendering 
+    # are captured in reverse order. `render_area` reversed them and plays them back at rendering
     # time.
     #
     # @example
@@ -214,12 +222,12 @@ module Nestive
       @_area_for[name] ||= []
       @_area_for[name] << [instruction, value]
     end
-    
+
     # Take the instructions we've gathered for the area and replay them one after the other on
     # an empty array. These instructions will push, unshift or replace items into our output array,
     # which we then join and mark as html_safe.
     #
-    # These instructions are reversed and replayed when we render the block (rather than as they 
+    # These instructions are reversed and replayed when we render the block (rather than as they
     # happen) due to the way they are gathered by the layout extension process (in reverse).
     #
     # @todo is `html_safe` "safe" here?
