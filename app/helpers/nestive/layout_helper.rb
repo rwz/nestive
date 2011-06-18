@@ -89,7 +89,7 @@ module Nestive
       layout = layout.include?('/') ? layout : "layouts/#{layout}"
 
       # Capture the content to be placed inside the extended layout
-      content_for :layout, capture(&block)
+      content_for(:layout).replace capture(&block)
 
       render :file => layout
     end
