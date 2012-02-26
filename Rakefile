@@ -1,21 +1,15 @@
 #!/usr/bin/env rake
-require 'rake/testtask'
+require 'rspec/core/rake_task'
 require 'rdoc/task'
 
 require 'bundler'
 Bundler::GemHelper.install_tasks
 
 
-desc 'Default: run unit tests.'
-task :default => :test
+task :default => :spec
 
-desc 'Test the nestive plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
+desc 'Run specs'
+RSpec::Core::RakeTask.new
 
 desc 'Generate documentation for the nestive plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
