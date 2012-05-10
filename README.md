@@ -145,7 +145,7 @@ We also need to instruct the `PostsController` not to wrap the view in a layout 
     # app/controllers/posts_controller.rb
     class PostsController < ApplicationController
       def index
-        render :layout => nil
+        render :layout => false
       end
     end
 
@@ -153,14 +153,14 @@ Or for an entire controller:
 
     # app/controllers/posts_controller.rb
     class PostsController < ApplicationController
-      layout nil
+      layout false
     end
     
 Or for every controller:
 
     # app/controllers/application_controller.rb
     class ApplicationController < ActionController::Base
-      layout nil
+      layout false
     end
 
 We'll find a way to make this easier or a bit more obvious in a future version.
