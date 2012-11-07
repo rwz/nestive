@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source :rubygems
 
 # Specify dependencies in nestive.gemspec
 gemspec
