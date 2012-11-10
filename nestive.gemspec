@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "nestive"
   s.version     = Nestive::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Justin French']
-  s.email       = ['justin@indent.com.au']
-  s.homepage    = ''
-  s.summary     = %{A Rails plugin/gem for awesome nested templates and layouts}
-  s.description = %{A Rails plugin/gem for awesome nested templates and layouts}
+  s.authors     = ['Justin French', 'Pavel Pravosud']
+  s.email       = ['justin@indent.com.au', 'pavel@pravosud.com']
+  s.homepage    = 'https://github.com/rwz/nestive'
+  s.summary     = 'A Rails plugin/gem for awesome nested templates and layouts'
+  s.description = 'A Rails plugin/gem for awesome nested templates and layouts'
 
   s.rubyforge_project = 'nestive'
 
