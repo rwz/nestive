@@ -1,4 +1,7 @@
-# Nestive, A Nested Inheritable Layouts Plugin for Rails
+# Nestive
+[![Build Status](https://travis-ci.org/rwz/nestive.png)](https://travis-ci.org/rwz/nestive)
+## A Nested Inheritable Layouts Plugin for Rails
+
 
 Nestive adds powerful layout and view helpers to your Rails app. It's similar to the nested layout technique [already documented in the Rails guides](http://guides.rubyonrails.org/layouts_and_rendering.html#using-nested-layouts) and found in many other nested layout plugins (a technique using `content_for` and rendering the parent layout at the end of the child layout). There's a bunch of problems with this technique, including:
 
