@@ -16,15 +16,19 @@ Nestive is *better* because it addresses these problems.
 
 The `area` helper is a lot like Rails' own `<%= yield :foo %>`, and is used in layouts to define and render a chunk of content in your layout:
 
-    <%= area :sidebar %>
+``` erb
+<%= area :sidebar %>
+```
 
 Unlike `yield`, `area` will allow your parent layouts to add content to the area at the same time using either a String or a block:
 
-    <%= area :sidebar, "Some Content Here" %>
+``` erb
+<%= area :sidebar, "Some Content Here" %>
 
-    <%= area :sidebar do %>
-      Some Content Here
-    <% end %>
+<%= area :sidebar do %>
+  Some Content Here
+<% end %>
+```
 
 It's important to note that this isn't *default* content, it *is* the content (unless a child changes it).
 
@@ -32,147 +36,175 @@ It's important to note that this isn't *default* content, it *is* the content (u
 
 The implementation details are quite different, but the `append` helper works much like Rails' built-in `content_for`. It will work with either a String or block, adding the new content onto the end of any content previously provided by parent layouts:
 
-    <%= extends :application do %>
-      <% append :sidebar, "More content." %>
-      <% append :sidebar do %>
-        More content.
-      <% end %>
-    <% end %>
+``` erb
+<%= extends :application do %>
+  <% append :sidebar, "More content." %>
+  <% append :sidebar do %>
+    More content.
+  <% end %>
+<% end %>
+```
 
 ### Prepending content to an area:
 
 Exactly what you think it is. The reverse of `append` (duh), adding the new content at the start of any content previously provided by parent layouts:
 
-    <%= extends :application do %>
-      <%= prepend :sidebar, "Content." %>
-      <%= prepend :sidebar do %>
-        Content.
-      <% end %>
-    <% end %>
+``` erb
+<%= extends :application do %>
+  <%= prepend :sidebar, "Content." %>
+  <%= prepend :sidebar do %>
+    Content.
+  <% end %>
+<% end %>
+```
 
 ### Replacing content
 
 You can also replace any content provided by parent layouts:
 
-    <%= extends :application do %>
-      <%= replace :sidebar, "New content." %>
-      <%= replace :sidebar do %>
-        New content.
-      <% end %>
-    <% end %>
+``` erb
+<%= extends :application do %>
+  <%= replace :sidebar, "New content." %>
+  <%= replace :sidebar do %>
+    New content.
+  <% end %>
+<% end %>
+```
 
 ### Extending a layout in a child layout (or view):
 
 Any layout (or view) can declare that it wants to inherit from and extend a parent layout, in this case we're extending `app/views/layouts/application.html.erb`:
 
-    <%= extends :application do %>
-       ...
-    <% end %>
+``` erb
+<%= extends :application do %>
+   ...
+<% end %>
+```
 
 You can nest many levels deep:
 
-    # app/views/layouts/application.html.erb
-    <!DOCTYPE html>
-      <html>
-        <head>
-          <%= area :head do %>
-            <title><%= area :title, 'Nestive' %></title>
-          <% end %>
-        </head>
-      <body>
-        <%= yield %>
-      </body>
-    </html>
+`app/views/layouts/application.html.erb`:
 
-    # app/views/layouts/with_sidebar.html.erb
-    <%= extends :application do %>
-      <div class="sidebar"><%= area(:sidebar) do %>
-        here goes sidebar
-      <% end %></div>
-      <%= yield -%>
-    <% end %>
-
-    # app/views/layouts/blog_posts.html.erb
-    <%= extends :with_sidebar do %>
-      <% append :sidebar do %>
-        Blog archive:
-        <%= render_blog_archive %>
+``` erb
+<!DOCTYPE html>
+  <html>
+    <head>
+      <%= area :head do %>
+        <title><%= area :title, 'Nestive' %></title>
       <% end %>
+    </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>
+```
 
-      <% append :head do %>
-        <%= javascript_include_tag 'fancy_blog_archive_tag_cloud' %>
-      <% end %>
+`app/views/layouts/with_sidebar.html.erb`:
 
-      <%= yield %>
-    <% end %>
+``` erb
+<%= extends :application do %>
+  <div class="sidebar"><%= area(:sidebar) do %>
+    here goes sidebar
+  <% end %></div>
+  <%= yield -%>
+<% end %>
+```
 
+`app/views/layouts/blog_posts.html.erb`:
 
+``` erb
+<%= extends :with_sidebar do %>
+  <% append :sidebar do %>
+    Blog archive:
+    <%= render_blog_archive %>
+  <% end %>
+
+  <% append :head do %>
+    <%= javascript_include_tag 'fancy_blog_archive_tag_cloud' %>
+  <% end %>
+
+  <%= yield %>
+<% end %>
+```
 
 ## The token blog example
 
 Set-up a global layout defining some content areas.
 
-    # app/views/layouts/application.html.erb
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <title><%= area :title, "JustinFrench.com" %></title>
-      <meta name="description" content="<%= area :description, "This is my website." %>">
-      <meta name="keywords" content="<%= area :keywords, "justin, french, ruby, design" %>">
-    </head>
-    <body>
-      <div id="wrapper">
-        <div id="content">
-          <%= area :content do %>
-            <p>Default content goes here.</p>
-          <% end %>
-        </div>
-        <div id="sidebar">
-          <%= area :sidebar do %>
-            <h2>About Me</h2>
-            <p>...</p>
-          <% end %>
-        </div>
-      </div>
-      <%= yield %>
-    </body>
-    </html>
+`app/views/layouts/application.html.erb`:
+
+``` erb
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= area :title, "JustinFrench.com" %></title>
+  <meta name="description" content="<%= area :description, "This is my website." %>">
+  <meta name="keywords" content="<%= area :keywords, "justin, french, ruby, design" %>">
+</head>
+<body>
+  <div id="wrapper">
+    <div id="content">
+      <%= area :content do %>
+        <p>Default content goes here.</p>
+      <% end %>
+    </div>
+    <div id="sidebar">
+      <%= area :sidebar do %>
+        <h2>About Me</h2>
+        <p>...</p>
+      <% end %>
+    </div>
+  </div>
+  <%= yield %>
+</body>
+</html>
+```
 
 Next, we set-up a `blog` layout that extends `application`, replacing, appending & prepending content to the areas we defined earlier.
 
-    # app/views/layouts/blog.html.erb
-    <%= extends :application do %>
-      <% replace :title, "My Blog – " %>
-      <% replace :description, "Justin French blogs here on Ruby, Rails, Design, Formtastic, etc" %>
-      <% prepend :keywords, "blog, weblog, design links, ruby links, formtastic release notes, " %>
-      <%= yield %>
-    <% end %>
+`app/views/layouts/blog.html.erb`:
+
+``` erb
+<%= extends :application do %>
+  <% replace :title, "My Blog – " %>
+  <% replace :description, "Justin French blogs here on Ruby, Rails, Design, Formtastic, etc" %>
+  <% prepend :keywords, "blog, weblog, design links, ruby links, formtastic release notes, " %>
+  <%= yield %>
+<% end %>
+```
 
 Now in our blog index view we can use `blog` layout and fill in the areas with content specific to the index action.
 
-    # app/views/posts/index.html.erb
-    <% replace :content do %>
-      <h1>My Blog</h1>
-      <%= render @articles %>
-    <% end %>
 
-    <% append :sidebar do %>
-      <h2>Blog Roll</h2>
-      <%= render @links %>
-    <% end %>
+`app/views/posts/index.html.erb`:
+
+``` erb
+<% replace :content do %>
+  <h1>My Blog</h1>
+  <%= render @articles %>
+<% end %>
+
+<% append :sidebar do %>
+  <h2>Blog Roll</h2>
+  <%= render @links %>
+<% end %>
+```
 
 We also need to instruct the `PostsController` to use this `blog` layout:
 
-    # app/controllers/posts_controller.rb
-    class PostsController < ApplicationController
-      layout 'blog'
-    end
+`app/controllers/posts_controller.rb`:
+
+``` ruby
+class PostsController < ApplicationController
+  layout 'blog'
+end
+```
 
 
 ## Installation
 
-* add `gem 'nestive', '~> 0.2'` to your gemfile
+* add `gem 'nestive', '~> 0.2'` to your Gemfile
 * run `bundle`
 
 ## Compatibility
