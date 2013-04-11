@@ -182,10 +182,10 @@ module Nestive
     # Replaces the content of an area previously declared or modified in parent layout(s). You can
     # provide the content using either a String, or a block.
     #
-    # @example Prepending content with a String
+    # @example Replacing content with a String
     #     <% replace :sidebar, "New content." %>
     #
-    # @example Prepending content with a block:
+    # @example Replacing content with a block:
     #     <% replace :sidebar do %>
     #       New content.
     #     <% end %>
@@ -198,6 +198,18 @@ module Nestive
     def replace(name, content=nil, &block)
       content = capture(&block) if block_given?
       add_instruction_to_area(name, :replace, [content])
+      nil
+    end
+
+    # Cleans the content of an area previously declared or modified in parent layout(s).
+    #
+    # @example Cleaning content
+    #     <% clean :sidebar %>
+    #
+    # @param [Symbol] name
+    #   A name to identify the area of content you wish to clean
+    def clean(name)
+      add_instruction_to_area(name, :replace, [])
       nil
     end
 

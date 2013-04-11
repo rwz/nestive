@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    nestive (0.2.0)
+    nestive (0.2.1)
       rails (>= 3.0.0)
 
 GEM
