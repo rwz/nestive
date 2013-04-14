@@ -196,6 +196,18 @@ module Nestive
       nil
     end
 
+    # Purge the content of an area previously declared or modified in parent layout(s).
+    #
+    # @example Purge content
+    #     <% purge :sidebar %>
+    #
+    # @param [Symbol] name
+    #   A name to identify the area of content you wish to purge
+    def purge(name)
+      add_instruction_to_area(name, :replace, [])
+      nil
+    end
+
     private
 
     # We record the instructions (declaring, appending, prepending and replacing) for an area of
