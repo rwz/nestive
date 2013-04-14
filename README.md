@@ -1,5 +1,5 @@
 # Nestive [![Build Status](https://travis-ci.org/rwz/nestive.png)](https://travis-ci.org/rwz/nestive) [![Code Climate](https://codeclimate.com/github/rwz/nestive.png)](https://codeclimate.com/github/rwz/nestive)
-## A Nested Inheritable Layouts Plugin for Rails
+## A Nested Inheritable Layouts Helpers for Rails
 
 
 Nestive adds powerful layout and view helpers to your Rails app. It's similar to the nested layout technique [already documented in the Rails guides](http://guides.rubyonrails.org/layouts_and_rendering.html#using-nested-layouts) and found in many other nested layout plugins (a technique using `content_for` and rendering the parent layout at the end of the child layout). There's a bunch of problems with this technique, including:
@@ -9,9 +9,9 @@ Nestive adds powerful layout and view helpers to your Rails app. It's similar to
 
 Nestive is *better* because it addresses these problems.
 
-## Just six methods (so far) – `area`, `extends`, `append`, `prepend`, `replace` and `purge`.
+## Just six methods (so far)
 
-### Declaring an area of content in your parent layout with `area`:
+### Declaring an area of content with `area`:
 
 The `area` helper is a lot like Rails' own `<%= yield :foo %>`, and is used in layouts to define and render a chunk of content in your layout:
 
@@ -31,7 +31,7 @@ Unlike `yield`, `area` will allow your parent layouts to add content to the area
 
 It's important to note that this isn't *default* content, it *is* the content (unless a child changes it).
 
-### Appending content to an area:
+### Appending content to an area with `append`:
 
 The implementation details are quite different, but the `append` helper works much like Rails' built-in `content_for`. It will work with either a String or block, adding the new content onto the end of any content previously provided by parent layouts:
 
@@ -44,7 +44,7 @@ The implementation details are quite different, but the `append` helper works mu
 <% end %>
 ```
 
-### Prepending content to an area:
+### Prepending content to an area with `prepend`:
 
 Exactly what you think it is. The reverse of `append` (duh), adding the new content at the start of any content previously provided by parent layouts:
 
@@ -57,7 +57,7 @@ Exactly what you think it is. The reverse of `append` (duh), adding the new cont
 <% end %>
 ```
 
-### Replacing content
+### Replacing content with `replace`
 
 You can also replace any content provided by parent layouts:
 
@@ -70,7 +70,7 @@ You can also replace any content provided by parent layouts:
 <% end %>
 ```
 
-### Removing content
+### Removing content with `purge`
 
 You can remove the content of the area:
 
@@ -84,7 +84,7 @@ You can remove the content of the area:
 <% replace :sidebar, nil %>
 ```
 
-### Extending a layout in a child layout (or view):
+### Extending a layout in a child layout (or view) with `extends`
 
 Any layout (or view) can declare that it wants to inherit from and extend a parent layout, in this case we're extending `app/views/layouts/application.html.erb`:
 
