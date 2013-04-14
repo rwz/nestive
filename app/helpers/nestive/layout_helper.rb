@@ -204,8 +204,7 @@ module Nestive
     # @param [Symbol] name
     #   A name to identify the area of content you wish to purge
     def purge(name)
-      add_instruction_to_area(name, :replace, [])
-      nil
+      replace name, nil
     end
 
     private
