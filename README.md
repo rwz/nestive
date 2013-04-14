@@ -1,5 +1,4 @@
-# Nestive
-[![Build Status](https://travis-ci.org/rwz/nestive.png)](https://travis-ci.org/rwz/nestive)
+# Nestive [![Build Status](https://travis-ci.org/rwz/nestive.png)](https://travis-ci.org/rwz/nestive)
 ## A Nested Inheritable Layouts Plugin for Rails
 
 
