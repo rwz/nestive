@@ -4,6 +4,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :test do
-  gem 'combustion', '~> 0.3.3'
-  gem 'rspec-rails', '~> 2.12'
+  gem 'combustion', '~> 0.4.0'
+  gem 'rspec-rails', '~> 2.13'
 end
