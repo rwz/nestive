@@ -55,7 +55,14 @@ describe NestiveController do
       assert_select '#some-area', 'replaced'
     end
   end
-  
+
+  context '#purge' do
+    it 'purge area content' do
+      get :purge
+      assert_select 'title'
+    end
+  end
+
   context '#extends' do
     it 'extends layouts' do
       get :extended_one
