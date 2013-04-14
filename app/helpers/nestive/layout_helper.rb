@@ -182,10 +182,10 @@ module Nestive
     # Replaces the content of an area previously declared or modified in parent layout(s). You can
     # provide the content using either a String, or a block.
     #
-    # @example Prepending content with a String
+    # @example Replacing content with a String
     #     <% replace :sidebar, "New content." %>
     #
-    # @example Prepending content with a block:
+    # @example Replacing content with a block:
     #     <% replace :sidebar do %>
     #       New content.
     #     <% end %>
