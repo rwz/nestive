@@ -9,7 +9,7 @@ Nestive adds powerful layout and view helpers to your Rails app. It's similar to
 
 Nestive is *better* because it addresses these problems.
 
-## Just five methods (so far) – `area`, `extends`, `append`, `prepend`, `replace`.
+## Just six methods (so far) – `area`, `extends`, `append`, `prepend`, `replace` and `purge`.
 
 ### Declaring an area of content in your parent layout with `area`:
 
@@ -68,6 +68,20 @@ You can also replace any content provided by parent layouts:
     New content.
   <% end %>
 <% end %>
+```
+
+### Removing content
+
+You can remove the content of the area:
+
+``` erb
+<% purge :sidebar %>
+```
+
+... which is equal to:
+
+``` erb
+<% replace :sidebar, nil %>
 ```
 
 ### Extending a layout in a child layout (or view):
