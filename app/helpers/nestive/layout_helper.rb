@@ -86,7 +86,7 @@ module Nestive
       layout = layout.to_s
 
       # If there's no directory component, presume a plain layout name
-      layout = layout.include?('/') ? layout : "layouts/#{layout}"
+      layout = "layouts/#{layout}" unless layout.include?('/')
 
       # Capture the content to be placed inside the extended layout
       content_for(:layout).replace capture(&block)
@@ -126,8 +126,8 @@ module Nestive
     #   An optional String of content to add to the area as you declare it.
     def area(name, content=nil, &block)
       content = capture(&block) if block_given?
-      append(name, content)
-      render_area(name)
+      append name, content
+      render_area name
     end
 
     # Appends content to an area previously defined or modified in parent layout(s). You can provide
@@ -148,7 +148,7 @@ module Nestive
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def append(name, content=nil, &block)
       content = capture(&block) if block_given?
-      add_instruction_to_area(name, :push, content)
+      add_instruction_to_area name, :push, content
       nil
     end
 
@@ -170,7 +170,7 @@ module Nestive
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def prepend(name, content=nil, &block)
       content = capture(&block) if block_given?
-      add_instruction_to_area(name, :unshift, content)
+      add_instruction_to_area name, :unshift, content
       nil
     end
 
@@ -192,7 +192,7 @@ module Nestive
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def replace(name, content=nil, &block)
       content = capture(&block) if block_given?
-      add_instruction_to_area(name, :replace, [content])
+      add_instruction_to_area name, :replace, [content]
       nil
     end
 
@@ -227,11 +227,11 @@ module Nestive
     #
     # @todo is `html_safe` "safe" here?
     def render_area(name)
-      output = []
-      (@_area_for[name] || []).reverse.each do |i|
-        output.send(i.first, i.last)
-      end
-      output.join.html_safe
+      [].tap do |output|
+        @_area_for.fetch(name, []).reverse_each do |i|
+          output.send i.first, i.last
+        end
+      end.join.html_safe
     end
 
   end
