@@ -54,8 +54,8 @@ module Nestive
 
     # Declares that the current layour (or view) is inheriting from and extending another layout.
     #
-    # @param [Symbol] name
-    #   The base name of the file in `layouts/` that you wish to extend (eg `:application` for `layouts/application.html.erb`)
+    # @param [String] layout
+    #   The base name of the file in `layouts/` that you wish to extend (eg `application` for `layouts/application.html.erb`)
     #
     # @example Extending the `application` layout to create an `admin` layout
     #
