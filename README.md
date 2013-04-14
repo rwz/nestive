@@ -217,7 +217,7 @@ end
 
 ## Installation
 
-* add `gem 'nestive', '~> 0.2'` to your Gemfile
+* add `gem 'nestive', '~> 0.3'` to your Gemfile
 * run `bundle`
 
 ## Compatibility
