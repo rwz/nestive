@@ -13,9 +13,8 @@ Gem::Specification.new do |s|
   s.description   = 'A Rails plugin/gem for awesome nested templates and layouts'
   s.licenses      = ['MIT']
 
-
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files         = Dir["README.md", "MIT-LICENSE", "lib/**/*"]
+  s.test_files    = Dir["spec/**/*"]
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ['lib']
 
