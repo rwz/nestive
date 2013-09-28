@@ -28,7 +28,7 @@ describe NestiveController do
 
     it 'appends content to area as a block' do
       get :append
-      assert_select '#some-area', "Some content\n Another content"
+      assert_select '#some-area', "Some content\n  Another content"
     end
   end
 
