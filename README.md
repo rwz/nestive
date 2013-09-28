@@ -222,7 +222,9 @@ end
 
 ## Compatibility
 
-Nestive should work properly with any Rails 3.*. It should probably work with 2.* too, but we don't have test coverage for this.
+Nestive should work properly with any Rails 3 and 4.
+Since version 0.5 only Ruby 1.9.3 and newer are supported. For 1.8 compatibility use version 0.4.
+
 
 *Nestive doesn't monkey patch or fiddle with any default behaviors in Rails.* Use it when you want to, don't when you don't.
 
