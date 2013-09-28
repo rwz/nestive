@@ -78,6 +78,10 @@ describe NestiveController do
       assert_select '#some-area', 'extended: two'
       assert_select 'h2', 'extended: one'
     end
+
+    it 'extends empty layout' do
+      get :extended_three
+    end
   end
   
 end

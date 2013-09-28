@@ -89,7 +89,7 @@ module Nestive
       layout = "layouts/#{layout}" unless layout.include?('/')
 
       # Capture the content to be placed inside the extended layout
-      content_for(:layout).replace capture(&block)
+      @view_flow.get(:layout).replace capture(&block)
 
       render :file => layout
     end
