@@ -6,7 +6,7 @@ require 'bundler'
 Bundler::GemHelper.install_tasks
 
 
-task :default => :spec
+task default: :spec
 
 desc 'Run specs'
 RSpec::Core::RakeTask.new

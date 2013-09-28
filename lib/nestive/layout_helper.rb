@@ -64,7 +64,7 @@ module Nestive
     #       ...
     #     <% end %>
     #
-    # @example Extending the `admin` layout in a view (you'll need to render the view with `:layout => nil`)
+    # @example Extending the `admin` layout in a view (you'll need to render the view with `layout: nil`)
     #
     #     # app/controllers/admin/posts_controller.rb
     #     class Admin::PostsController < ApplicationController
@@ -73,7 +73,7 @@ module Nestive
     #
     #       # Or disable Rails' layout rendering per-controller
     #       def index
-    #         render :layout => nil
+    #         render layout: nil
     #       end
     #     end
     #
@@ -91,7 +91,7 @@ module Nestive
       # Capture the content to be placed inside the extended layout
       @view_flow.get(:layout).replace capture(&block)
 
-      render :file => layout
+      render file: layout
     end
 
     # Defines an area of content in your layout that can be modified or replaced by child layouts
