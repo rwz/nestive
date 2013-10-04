@@ -237,8 +237,8 @@ module Nestive
     # @todo is `html_safe` "safe" here?
     def render_area(name)
       [].tap do |output|
-        @_area_for.fetch(name, []).reverse_each do |i|
-          output.send i.first, i.last
+        @_area_for.fetch(name, []).reverse_each do |method_name, content|
+          output.public_send method_name, content
         end
       end.join.html_safe
     end
