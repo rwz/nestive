@@ -233,8 +233,6 @@ module Nestive
     #
     # These instructions are reversed and replayed when we render the block (rather than as they
     # happen) due to the way they are gathered by the layout extension process (in reverse).
-    #
-    # @todo is `html_safe` "safe" here?
     def render_area(name)
       [].tap do |output|
         @_area_for.fetch(name, []).reverse_each do |method_name, content|
