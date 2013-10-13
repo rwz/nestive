@@ -215,7 +215,7 @@ end
 ```
 
 ## Caching
-Nestive works the same way `content_for` does and has the same caching drawbacks. That means that nestive helpers are completely ignored when called from within cached block. You probably don't want to use fragment caching around dynamic nestive areas and have to be extra careful what and how you cach to avoid unpleasant surprizes.
+Nestive works the same way `content_for` does and has the same caching drawbacks. That means that nestive helpers are completely ignored when called from within cached block. You probably don't want to use fragment caching around dynamic nestive areas and have to be extra careful what and how you cach to avoid unpleasant surprises.
 
 ## Installation
 
