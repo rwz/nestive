@@ -86,7 +86,7 @@ module Nestive
       # This allows for non-linear extension trees.  More specifically, this
       # allows multiple partials to extend the same base partial and be rendered
       # in the same view
-      saved_area_for = @_area_for.clone
+      saved_area_for = !@_area_for.nil? ? @_area_for.clone : nil
 
       # Make sure it's a string
       layout = layout.to_s
