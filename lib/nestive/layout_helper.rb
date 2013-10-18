@@ -82,6 +82,12 @@ module Nestive
     #       ...
     #     <% end %>
     def extends(layout, &block)
+      # Save the current area context.
+      # This allows for non-linear extension trees.  More specifically, this
+      # allows multiple partials to extend the same base partial and be rendered
+      # in the same view
+      saved_area_for = @_area_for.clone
+
       # Make sure it's a string
       layout = layout.to_s
 
@@ -91,7 +97,12 @@ module Nestive
       # Capture the content to be placed inside the extended layout
       @view_flow.get(:layout).replace capture(&block)
 
-      render file: layout
+      results = render file: layout
+
+      # Restore the saved area context
+      @_area_for = saved_area_for
+
+      results
     end
 
     # Defines an area of content in your layout that can be modified or replaced by child layouts
