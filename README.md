@@ -2,10 +2,18 @@
 ## A Nested Inheritable Layouts Helpers for Rails
 
 
-Nestive adds powerful layout and view helpers to your Rails app. It's similar to the nested layout technique [already documented in the Rails guides](http://guides.rubyonrails.org/layouts_and_rendering.html#using-nested-layouts) and found in many other nested layout plugins (a technique using `content_for` and rendering the parent layout at the end of the child layout). There's a bunch of problems with this technique, including:
+Nestive adds powerful layout and view helpers to your Rails app. It's similar
+to the nested layout technique [already documented in the Rails
+guides](http://guides.rubyonrails.org/layouts_and_rendering.html#using-nested-layouts)
+and found in many other nested layout plugins (a technique using `content_for`
+and rendering the parent layout at the end of the child layout). There's a
+bunch of problems with this technique, including:
 
-* you can only *append* content to the content buffer with `content_for` (you can't prepend to content, you can't replace it)
-* when combined with this nested layout technique, `content_for` actually *prepends* new content to the buffer, because each parent layout is rendered *after* it's child
+* you can only *append* content to the content buffer with `content_for` (you
+  can't prepend to content, you can't replace it)
+* when combined with this nested layout technique, `content_for` actually
+  *prepends* new content to the buffer, because each parent layout is rendered
+  *after* it's child
 
 Nestive is *better* because it addresses these problems.
 
@@ -13,15 +21,17 @@ Nestive is *better* because it addresses these problems.
 
 ### Declaring an area of content with `area`:
 
-The `area` helper is a lot like Rails' own `<%= yield :foo %>`, and is used in layouts to define and render a chunk of content in your layout:
+The `area` helper is a lot like Rails' own `<%= yield :foo %>`, and is used in
+layouts to define and render a chunk of content in your layout:
 
-``` erb
+```erb
 <%= area :sidebar %>
 ```
 
-Unlike `yield`, `area` will allow your parent layouts to add content to the area at the same time using either a String or a block:
+Unlike `yield`, `area` will allow your parent layouts to add content to the
+area at the same time using either a String or a block:
 
-``` erb
+```erb
 <%= area :sidebar, "Some Content Here" %>
 
 <%= area :sidebar do %>
@@ -29,13 +39,17 @@ Unlike `yield`, `area` will allow your parent layouts to add content to the area
 <% end %>
 ```
 
-It's important to note that this isn't *default* content, it *is* the content (unless a child changes it).
+It's important to note that this isn't *default* content, it *is* the content
+(unless a child changes it).
 
 ### Appending content to an area with `append`:
 
-The implementation details are quite different, but the `append` helper works much like Rails' built-in `content_for`. It will work with either a String or block, adding the new content onto the end of any content previously provided by parent layouts:
+The implementation details are quite different, but the `append` helper works
+much like Rails' built-in `content_for`. It will work with either a String or
+block, adding the new content onto the end of any content previously provided
+by parent layouts:
 
-``` erb
+```erb
 <%= extends :application do %>
   <% append :sidebar, "More content." %>
   <% append :sidebar do %>
@@ -46,7 +60,8 @@ The implementation details are quite different, but the `append` helper works mu
 
 ### Prepending content to an area with `prepend`:
 
-Exactly what you think it is. The reverse of `append` (duh), adding the new content at the start of any content previously provided by parent layouts:
+Exactly what you think it is. The reverse of `append` (duh), adding the new
+content at the start of any content previously provided by parent layouts:
 
 ``` erb
 <%= extends :application do %>
@@ -86,7 +101,9 @@ You can remove the content of the area:
 
 ### Extending a layout in a child layout (or view) with `extends`
 
-Any layout (or view) can declare that it wants to inherit from and extend a parent layout, in this case we're extending `app/views/layouts/application.html.erb`:
+Any layout (or view) can declare that it wants to inherit from and extend a
+parent layout, in this case we're extending
+`app/views/layouts/application.html.erb`:
 
 ``` erb
 <%= extends :application do %>
@@ -174,7 +191,8 @@ Set-up a global layout defining some content areas.
 </html>
 ```
 
-Next, we set-up a `blog` layout that extends `application`, replacing, appending & prepending content to the areas we defined earlier.
+Next, we set-up a `blog` layout that extends `application`, replacing,
+appending & prepending content to the areas we defined earlier.
 
 `app/views/layouts/blog.html.erb`:
 
@@ -187,7 +205,8 @@ Next, we set-up a `blog` layout that extends `application`, replacing, appending
 <% end %>
 ```
 
-Now in our blog index view we can use `blog` layout and fill in the areas with content specific to the index action.
+Now in our blog index view we can use `blog` layout and fill in the areas with
+content specific to the index action.
 
 
 `app/views/posts/index.html.erb`:
@@ -215,7 +234,11 @@ end
 ```
 
 ## Caching
-Nestive works the same way `content_for` does and has the same caching drawbacks. That means that nestive helpers are completely ignored when called from within cached block. You probably don't want to use fragment caching around dynamic nestive areas and have to be extra careful what and how you cach to avoid unpleasant surprises.
+Nestive works the same way `content_for` does and has the same caching
+drawbacks. That means that nestive helpers are completely ignored when called
+from within cached block. You probably don't want to use fragment caching
+around dynamic nestive areas and have to be extra careful what and how you
+cache to avoid unpleasant surprises.
 
 ## Installation
 
@@ -224,8 +247,8 @@ Nestive works the same way `content_for` does and has the same caching drawbacks
 
 ## Compatibility
 
-Nestive should work properly with any Rails 3 and 4.
-Since version 0.5 only Ruby 1.9.3 and newer are supported. For 1.8 compatibility use version 0.4.
+Nestive should work properly with any Rails 3 and 4. Since version 0.5 only
+Ruby 1.9.3 and newer are supported. For 1.8 compatibility use version 0.4.
 
 
 *Nestive doesn't monkey patch or fiddle with any default behaviors in Rails.* Use it when you want to, don't when you don't.
