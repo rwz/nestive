@@ -87,10 +87,11 @@ You can also replace any content provided by parent layouts:
 
 ### Removing content with `purge`
 
-You can remove the content of the area:
+You can remove the content in the single or in multiple areas
 
 ``` erb
 <% purge :sidebar %>
+<% purge :sidebar, :banner %>
 ```
 
 ... which is equal to:
