@@ -198,8 +198,8 @@ module Nestive
     # @example Purge content
     #     <% purge :sidebar %>
     #
-    # @param [Symbol] name
-    #   A name to identify the area of content you wish to purge
+    # @param names
+    #   A list of area names to purge
     def purge(*names)
       names.each{ |name| replace(name, nil)}
     end
