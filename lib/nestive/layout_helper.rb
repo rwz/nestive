@@ -201,7 +201,7 @@ module Nestive
     # @param [Symbol] name
     #   A name to identify the area of content you wish to purge
     def purge(*names)
-      names.each{|name| replace(name, nil)}
+      names.each{ |name| replace(name, nil)}
     end
 
     private
