@@ -57,9 +57,15 @@ describe NestiveController do
   end
 
   context '#purge' do
-    it 'purge area content' do
-      get :purge
+    it 'purge single area content' do
+      get :purge_single
       assert_select 'title'
+    end
+
+    it 'purge few areas content' do
+      get :purge_multiple
+      assert_select 'title'
+      assert_select '#some-area'
     end
   end
 
