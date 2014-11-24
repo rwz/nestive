@@ -1,0 +1,6 @@
+<%= extends :needs_options, locals: { title: 'Passed in as a local' } do %>
+  <%= replace :some_area do %>
+    locals: title
+  <% end %>
+  <%= yield %>
+<% end %>

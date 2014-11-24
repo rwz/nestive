@@ -1,0 +1,6 @@
+<h1>Features</h1>
+<%= area :features_list do %>
+  <%- features.each do |feature| %>
+    <div id='basic-feature-<%= feature %>'>Basic Features <%= feature %></div>
+  <%- end %>
+<% end %>

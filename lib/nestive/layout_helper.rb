@@ -81,7 +81,7 @@ module Nestive
     #     <%= extends :admin do %>
     #       ...
     #     <% end %>
-    def extends(layout, &block)
+    def extends(layout, options = {}, &block)
       # Make sure it's a string
       layout = layout.to_s
 
@@ -91,7 +91,20 @@ module Nestive
       # Capture the content to be placed inside the extended layout
       @view_flow.get(:layout).replace capture(&block)
 
-      render file: layout
+      render options.merge(file: layout)
+    end
+
+    def extends_partial(partial, options = {}, &block)
+      # Make sure it's a string
+      partial = partial.to_s
+
+      # Capture the content to be placed inside the partial
+      # unless we don't have anything
+      if block_given? && block.call
+        @view_flow.get(:partial).replace capture(&block)
+      end
+
+      render options.merge(partial: partial)
     end
 
     # Defines an area of content in your layout that can be modified or replaced by child layouts
