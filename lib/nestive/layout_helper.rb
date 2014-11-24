@@ -56,6 +56,8 @@ module Nestive
     #
     # @param [String] layout
     #   The base name of the file in `layouts/` that you wish to extend (eg `application` for `layouts/application.html.erb`)
+    # @param [Hash] options
+    #   Any options such as locals that you want to pass through to the layout rendering
     #
     # @example Extending the `application` layout to create an `admin` layout
     #
@@ -94,6 +96,14 @@ module Nestive
       render options.merge(file: layout)
     end
 
+    # Works exactly the same as extends but is targeted at extending partials not
+    # layouts.
+    #
+    # @param [String] partial
+    #   The base name of the partial that you wish to extend (eg `header` for `application/_header.html.erb`)
+    # @param [Hash] options
+    #   Any options such as the object or locals that you want to pass through to the parital rendering
+    #
     def extends_partial(partial, options = {}, &block)
       # Make sure it's a string
       partial = partial.to_s
