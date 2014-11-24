@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-gem 'pry'
 
 # Specify dependencies in nestive.gemspec
 gemspec
