@@ -17,7 +17,7 @@ bunch of problems with this technique, including:
 
 Nestive is *better* because it addresses these problems.
 
-## Just six methods (so far)
+## Just seven methods (so far)
 
 ### Declaring an area of content with `area`:
 
@@ -233,6 +233,12 @@ class PostsController < ApplicationController
   layout 'blog'
 end
 ```
+
+### Extending a parital in a child partial (or view) with `extends_partial`
+
+Any partial (or view) can declare that it wants to inherit from and extend a
+parent partial.
+
 
 ## Caching
 Nestive works the same way `content_for` does and has the same caching

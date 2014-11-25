@@ -90,4 +90,33 @@ describe NestiveController do
     end
   end
 
+  context '#locals' do
+    it 'allows for options to be passed through to the file render' do
+      get :locals
+      assert_select 'title', 'Passed in as a local'
+      assert_select '#some-area', 'locals: title'
+    end
+  end
+
+  context '#extends_partial' do
+    it 'nestive works great with partials also!' do
+      get :extended_partial
+      assert_select 'h1', 'Features'
+      assert_select '#basic-features', 'Basic Features'
+      assert_select '#extended-features', 'Extended Features'
+    end
+
+    it 'partials are a lot more fun with options' do
+      get :extended_partial_options
+      assert_select 'h1', 'Features'
+      assert_select '#basic-feature-1', 'Basic Features 1'
+      assert_select '#basic-feature-2', 'Basic Features 2'
+      assert_select '#extended-features', 'Extended Features'
+    end
+
+    it 'should only render the extensions on the partial a single time!' do
+      get :extended_partial_options
+      assert_select '.feature', 3
+    end
+  end
 end

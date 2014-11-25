@@ -56,6 +56,8 @@ module Nestive
     #
     # @param [String] layout
     #   The base name of the file in `layouts/` that you wish to extend (eg `application` for `layouts/application.html.erb`)
+    # @param [Hash] options
+    #   Any options such as locals that you want to pass through to the layout rendering
     #
     # @example Extending the `application` layout to create an `admin` layout
     #
@@ -81,7 +83,7 @@ module Nestive
     #     <%= extends :admin do %>
     #       ...
     #     <% end %>
-    def extends(layout, &block)
+    def extends(layout, options = {}, &block)
       # Make sure it's a string
       layout = layout.to_s
 
@@ -91,7 +93,22 @@ module Nestive
       # Capture the content to be placed inside the extended layout
       @view_flow.get(:layout).replace capture(&block)
 
-      render file: layout
+      render options.merge(file: layout)
+    end
+
+    # Works exactly the same as extends but is targeted at extending partials not
+    # layouts.
+    #
+    # @param [String] partial
+    #   The base name of the partial that you wish to extend (eg `header` for `application/_header.html.erb`)
+    # @param [Hash] options
+    #   Any options such as the object or locals that you want to pass through to the parital rendering
+    #
+    def extends_partial(partial, options = {}, &block)
+      # Make sure it's a string
+      partial = partial.to_s
+      block.call if block_given?
+      render options.merge(partial: partial)
     end
 
     # Defines an area of content in your layout that can be modified or replaced by child layouts
