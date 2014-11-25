@@ -107,13 +107,7 @@ module Nestive
     def extends_partial(partial, options = {}, &block)
       # Make sure it's a string
       partial = partial.to_s
-
-      # Capture the content to be placed inside the partial
-      # unless we don't have anything
-      if block_given? && block.call
-        @view_flow.get(:partial).replace capture(&block)
-      end
-
+      block.call if block_given?
       render options.merge(partial: partial)
     end
 
