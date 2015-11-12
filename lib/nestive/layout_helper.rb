@@ -125,7 +125,7 @@ module Nestive
     # @param [String] content
     #   An optional String of content to add to the area as you declare it.
     def area(name, content=nil, &block)
-      content = capture(&block) if block_given?
+      content = capture(&block) if block_given? && capture_content?(name)
       append name, content
       render_area name
     end
@@ -202,6 +202,7 @@ module Nestive
     #   A list of area names to purge
     def purge(*names)
       names.each{ |name| replace(name, nil)}
+      nil
     end
 
     private
@@ -239,6 +240,19 @@ module Nestive
           output.public_send method_name, content
         end
       end.join.html_safe
+    end
+
+    # Determines if template's area is purged or replaced in the view.
+    # Used to determine if template area should be rendered
+    #
+    # @param [Symbol] name
+    #  the area to determine if content should be rendered
+    #
+    # @return [Boolean]
+    def capture_content?(name)
+      defined_area_methods = @_area_for.fetch(name, []).map { |(method, _)| method }
+      non_capture_methods = [:purge, :replace]
+      (defined_area_methods & non_capture_methods).none?
     end
 
   end
