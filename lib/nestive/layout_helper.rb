@@ -202,6 +202,7 @@ module Nestive
     #   A list of area names to purge
     def purge(*names)
       names.each{ |name| replace(name, nil)}
+      nil
     end
 
     private
