@@ -20,5 +20,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9.3'
 
-  s.add_dependency 'rails', '>= 3.0.0'
+  s.add_dependency 'activesupport', '>= 3.0.0'
+  s.add_dependency 'actionview', '>= 3.0.0'
+  s.add_dependency 'railties', '>= 3.0.0'
 end
