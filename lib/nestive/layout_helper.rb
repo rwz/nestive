@@ -254,6 +254,5 @@ module Nestive
       non_capture_methods = [:purge, :replace]
       (defined_area_methods & non_capture_methods).none?
     end
-
   end
 end
