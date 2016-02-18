@@ -250,6 +250,7 @@ module Nestive
     #
     # @return [Boolean]
     def capture_content?(name)
+      @_area_for ||= {}
       defined_area_methods = @_area_for.fetch(name, []).map { |(method, _)| method }
       non_capture_methods = [:purge, :replace]
       (defined_area_methods & non_capture_methods).none?
