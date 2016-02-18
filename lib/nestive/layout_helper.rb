@@ -147,7 +147,7 @@ module Nestive
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def append(name, content=nil, &block)
-      content = capture(&block) if block_given?
+      content = capture(&block) if block_given? && capture_content?(name)
       add_instruction_to_area name, :push, content
     end
 
@@ -168,7 +168,7 @@ module Nestive
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def prepend(name, content=nil, &block)
-      content = capture(&block) if block_given?
+      content = capture(&block) if block_given? && capture_content?(name)
       add_instruction_to_area name, :unshift, content
     end
 
@@ -189,7 +189,7 @@ module Nestive
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def replace(name, content=nil, &block)
-      content = capture(&block) if block_given?
+      content = capture(&block) if block_given? && capture_content?(name)
       add_instruction_to_area name, :replace, [content]
     end
 
@@ -200,8 +200,10 @@ module Nestive
     #
     # @param names
     #   A list of area names to purge
+    #
+    # @retrun [NilClass]
     def purge(*names)
-      names.each{ |name| replace(name, nil)}
+      names.each { |name| replace(name, nil) }
       nil
     end
 
@@ -255,6 +257,5 @@ module Nestive
       non_capture_methods = [:purge, :replace]
       (defined_area_methods & non_capture_methods).none?
     end
-
   end
 end
