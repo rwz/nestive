@@ -200,8 +200,10 @@ module Nestive
     #
     # @param names
     #   A list of area names to purge
+    #
+    # @retrun [NilClass]
     def purge(*names)
-      names.each{ |name| replace(name, nil)}
+      names.each { |name| replace(name, nil) }
       nil
     end
 
