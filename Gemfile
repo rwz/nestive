@@ -1,9 +1,7 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Specify dependencies in nestive.gemspec
 gemspec
 
-group :test do
-  gem 'combustion', '~> 0.5.1'
-  gem 'rspec-rails', '~> 3.0'
-end
+gem "combustion",  "~> 0.5.4"
+gem "rspec-rails", "~> 3.5"
+gem "appraisal",   "~> 2.1"
