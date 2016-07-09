@@ -11,5 +11,8 @@
       <%- end -%>
     </div>
     <div id="empty-area"><%= area :empty_area %></div>
+    <% if local_assigns[:wide] %>
+      <p id="wide-section">wide section</p>
+    <% end %>
   </body>
 </html>
