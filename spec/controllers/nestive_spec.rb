@@ -88,6 +88,10 @@ describe NestiveController do
     it 'extends empty layout' do
       get :extended_three
     end
-  end
 
+    it 'extends layout without yield' do
+      get :extended_without_yield
+      assert_select 'title', 'extended: without_yield'
+    end
+  end
 end
