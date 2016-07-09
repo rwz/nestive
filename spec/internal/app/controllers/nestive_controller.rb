@@ -10,4 +10,8 @@ class NestiveController < ApplicationController
   def extended_three
     render layout: 'extend_one'
   end
+
+  def extended_with_options
+    render layout: 'extend_with_options'
+  end
 end
