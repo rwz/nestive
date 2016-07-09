@@ -75,6 +75,7 @@ describe NestiveController do
       assert_select 'p', 'extended: one'
       assert_select 'title', 'extended: one'
       assert_select 'h2', 'extended: one'
+      assert_select '#wide-section', false
     end
 
     it 'can extend already extended layouts' do
@@ -83,10 +84,17 @@ describe NestiveController do
       assert_select 'title', 'extended: one'
       assert_select '#some-area', 'extended: two'
       assert_select 'h2', 'extended: one'
+      assert_select '#wide-section', false
     end
 
     it 'extends empty layout' do
       get :extended_three
+      assert_select '#wide-section', false
+    end
+
+    it 'extends layout with options' do
+      get :extended_with_options
+      assert_select '#wide-section', 'wide section'
     end
 
     it 'extends layout without yield' do
