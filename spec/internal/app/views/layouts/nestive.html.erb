@@ -8,8 +8,11 @@
     <div id="some-area">
       <%= area :some_area do -%>
         Some content
-      <%- end -%>
+      <% end %>
     </div>
     <div id="empty-area"><%= area :empty_area %></div>
+    <% if local_assigns[:wide] %>
+      <div id="wide-section">wide section</div>
+    <% end %>
   </body>
 </html>

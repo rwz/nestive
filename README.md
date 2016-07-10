@@ -112,7 +112,7 @@ parent layout, in this case we're extending
 <% end %>
 ```
 
-You can nest many levels deep:
+You can nest many levels deep and even pass options down the stack:
 
 `app/views/layouts/application.html.erb`:
 
@@ -126,6 +126,9 @@ You can nest many levels deep:
     </head>
   <body>
     <%= yield %>
+    <% if local_assigns[:footer] -%>
+      <div class="footer">This is an optional site footer.</div>
+    <% end %>
   </body>
 </html>
 ```
@@ -133,7 +136,7 @@ You can nest many levels deep:
 `app/views/layouts/with_sidebar.html.erb`:
 
 ``` erb
-<%= extends :application do %>
+<%= extends :application, local_assigns do %>
   <div class="sidebar"><%= area(:sidebar) do %>
     here goes sidebar
   <% end %></div>
@@ -144,7 +147,7 @@ You can nest many levels deep:
 `app/views/layouts/blog_posts.html.erb`:
 
 ``` erb
-<%= extends :with_sidebar do %>
+<%= extends :with_sidebar, footer: true do %>
   <% append :sidebar do %>
     Blog archive:
     <%= render_blog_archive %>
@@ -157,6 +160,8 @@ You can nest many levels deep:
   <%= yield %>
 <% end %>
 ```
+
+You will notice that in the base layout (`application.html.erb`) we have conditional logic for showing or hiding a footer div, depending on the options passed in. In the nest layout that extends from `application` we simply pass down the local options. But, in the `blog_posts` layout, we actually set the `footer` option to true. This option will be passed from `blog_posts` to `with_sidebar` and finally down to `application`, where the conditional will resolve and the footer div will be added to the rendered page.
 
 ## The token blog example
 

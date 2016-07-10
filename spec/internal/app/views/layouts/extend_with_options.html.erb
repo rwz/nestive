@@ -1,0 +1,6 @@
+<%= extends :extend_one, wide: true do %>
+  <%= replace :some_area do %>
+    extended: with_options
+  <% end %>
+  <%= yield %>
+<% end %>

@@ -14,4 +14,8 @@ class NestiveController < ApplicationController
   def extended_without_yield
     render layout: 'extend_without_yield'
   end
+
+  def extended_with_options
+    render layout: 'extend_with_options'
+  end
 end
