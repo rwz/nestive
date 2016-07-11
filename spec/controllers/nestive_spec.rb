@@ -54,18 +54,32 @@ describe NestiveController do
       get :replace
       assert_select '#some-area', 'replaced'
     end
+
+    context 'replace in a child whose parent replaces the area' do
+      it 'overrides the parent replace and does not evaluate' do
+        get :replace_override
+        assert_select 'title', 'New Title'
+      end
+    end
   end
 
   context '#purge' do
     it 'purge single area content' do
       get :purge_single
-      assert_select 'title'
+      assert_select 'title', ''
     end
 
     it 'purge few areas content' do
       get :purge_multiple
       assert_select 'title'
       assert_select '#some-area'
+    end
+
+    context 'purge in a child whose parent replaces the area' do
+      it 'overrides the parent replace by purging the area' do
+        get :purge_override
+        assert_select 'title', ''
+      end
     end
   end
 

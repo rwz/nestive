@@ -1,0 +1,8 @@
+<%= extends :nestive do %>
+  <% replace :title do %>
+    <% raise 'Error, this layout is broken; children should replace this region' %>
+  <% end %>
+  <h2>extended: one</h2>
+
+  <%= yield %>
+<% end %>
