@@ -65,8 +65,8 @@ content at the start of any content previously provided by parent layouts:
 
 ``` erb
 <%= extends :application do %>
-  <%= prepend :sidebar, "Content." %>
-  <%= prepend :sidebar do %>
+  <% prepend :sidebar, "Content." %>
+  <% prepend :sidebar do %>
     Content.
   <% end %>
 <% end %>
@@ -78,8 +78,8 @@ You can also replace any content provided by parent layouts:
 
 ``` erb
 <%= extends :application do %>
-  <%= replace :sidebar, "New content." %>
-  <%= replace :sidebar do %>
+  <% replace :sidebar, "New content." %>
+  <% replace :sidebar do %>
     New content.
   <% end %>
 <% end %>

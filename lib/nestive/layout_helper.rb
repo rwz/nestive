@@ -125,7 +125,7 @@ module Nestive
     # @param [String] content
     #   An optional String of content to add to the area as you declare it.
     def area(name, content=nil, &block)
-      content = capture(&block) if block_given?
+      content = capture(&block) if block_given? && capture_content?(name)
       append name, content
       render_area name
     end
@@ -147,7 +147,7 @@ module Nestive
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def append(name, content=nil, &block)
-      content = capture(&block) if block_given?
+      content = capture(&block) if block_given? && capture_content?(name)
       add_instruction_to_area name, :push, content
     end
 
@@ -168,7 +168,7 @@ module Nestive
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def prepend(name, content=nil, &block)
-      content = capture(&block) if block_given?
+      content = capture(&block) if block_given? && capture_content?(name)
       add_instruction_to_area name, :unshift, content
     end
 
@@ -189,7 +189,7 @@ module Nestive
     # @param [String] content
     #   Optionally provide a String of content, instead of a block. A block will take precedence.
     def replace(name, content=nil, &block)
-      content = capture(&block) if block_given?
+      content = capture(&block) if block_given? && capture_content?(name)
       add_instruction_to_area name, :replace, [content]
     end
 
@@ -200,8 +200,11 @@ module Nestive
     #
     # @param names
     #   A list of area names to purge
+    #
+    # @retrun [NilClass]
     def purge(*names)
-      names.each{ |name| replace(name, nil)}
+      names.each { |name| replace(name, nil) }
+      nil
     end
 
     private
@@ -241,5 +244,18 @@ module Nestive
       end.join.html_safe
     end
 
+    # Determines if template's area is purged or replaced in the view.
+    # Used to determine if template area should be rendered
+    #
+    # @param [Symbol] name
+    #  the area to determine if content should be rendered
+    #
+    # @return [Boolean]
+    def capture_content?(name)
+      @_area_for ||= {}
+      defined_area_methods = @_area_for.fetch(name, []).map { |(method, _)| method }
+      non_capture_methods = [:purge, :replace]
+      (defined_area_methods & non_capture_methods).none?
+    end
   end
 end
