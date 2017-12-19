@@ -1,5 +1,8 @@
+test/debug.log
+coverage
+rdoc
+memory
+*.gem
 .rvmrc
-doc
-.yardoc
-pkg
 Gemfile.lock
+log

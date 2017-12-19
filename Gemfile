@@ -1,7 +1,7 @@
-source "https://rubygems.org"
+source 'http://rubygems.org'
+
+git_source :github do |repo_name|
+    "https://github.com/#{repo_name}"
+end
 
 gemspec
-
-gem "combustion",  "~> 0.5.4"
-gem "rspec-rails", "~> 3.5"
-gem "appraisal",   "~> 2.1"
