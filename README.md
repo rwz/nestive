@@ -4,12 +4,12 @@
 
 This gem is a continuation for Rails 5 of the [nestive](https://github.com/rwz/nestive) gem originally created by Justin French and Pavel Pravosud.
 
-Nestive adds powerful layout and view helpers to your Rails app. It's similar to the nested layout technique [already documented in the Rails guides](http://guides.rubyonrails.org/layouts_and_rendering.html#using-nested-layouts) and found in many other nested layout plugins (a technique using `content_for` and rendering the parent layout at the end of the child layout). There's a bunch of problems with this technique, including:
+nestive-rails adds powerful layout and view helpers to your Rails app. It's similar to the nested layout technique [already documented in the Rails guides](http://guides.rubyonrails.org/layouts_and_rendering.html#using-nested-layouts) and found in many other nested layout plugins (a technique using `content_for` and rendering the parent layout at the end of the child layout). There's a bunch of problems with this technique, including:
 
 * you can only *append* content to the content buffer with `content_for` (you can't prepend to content, you can't replace it)
 * when combined with this nested layout technique, `content_for` actually *prepends* new content to the buffer, because each parent layout is rendered *after* it's child
 
-Nestive is *better* because it addresses these problems.
+nestive-rails is *better* because it addresses these problems.
 
 ---
 
