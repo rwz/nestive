@@ -17,6 +17,13 @@ nestive-rails is *better* because it addresses these problems.
 
 * [Installation](#installation)
 * [Usage](#usage)
+   * [Declaring an area of content with `area`](#declaring-an-area-of-content-with-area)
+   * [Appending content to an area with `append`](#appending-content-to-an-area-with-append)
+   * [Prepending content to an area with `prepend`](#prepending-content-to-an-area-with-prepend)
+   * [Replacing content with `replace`](#replacing-content-with-replace)
+   * [Removing content with `purge`](#removing-content-with-purge)
+   * [Extending a layout in a child layout (or view) with `extends`](#extending-a-layout-in-a-child-layout-or-view-with-extends)
+* [Example](#example)
 * [Caching](#caching)
 * [To Do](#to-do)
 * [Contributing](#contributing)
@@ -49,7 +56,7 @@ gem 'nestive-rails', github: 'jonhue/nestive-rails'
 
 ## Usage
 
-### Declaring an area of content with `area`:
+### Declaring an area of content with `area`
 
 The `area` helper is a lot like Rails' own `<%= yield :foo %>`, and is used in layouts to define and render a chunk of content in your layout:
 
@@ -69,7 +76,7 @@ Unlike `yield`, `area` will allow your parent layouts to add content to the area
 
 It's important to note that this isn't *default* content, it *is* the content (unless a child changes it).
 
-### Appending content to an area with `append`:
+### Appending content to an area with `append`
 
 The implementation details are quite different, but the `append` helper works much like Rails' built-in `content_for`. It will work with either a String or block, adding the new content onto the end of any content previously provided by parent layouts:
 
@@ -82,7 +89,7 @@ The implementation details are quite different, but the `append` helper works mu
 <% end %>
 ```
 
-### Prepending content to an area with `prepend`:
+### Prepending content to an area with `prepend`
 
 Exactly what you think it is. The reverse of `append` (duh), adding the new content at the start of any content previously provided by parent layouts:
 
@@ -179,7 +186,9 @@ You can nest many levels deep:
 <% end %>
 ```
 
-## The token blog example
+---
+
+## Example
 
 Set-up a global layout defining some content areas.
 
