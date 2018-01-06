@@ -1,4 +1,4 @@
-require 'rails'
+require 'rails/railtie'
 
 module NestiveRails
     class Railtie < Rails::Railtie
