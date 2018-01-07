@@ -28,6 +28,7 @@ nestive-rails is *better* because it addresses these problems.
 * [To Do](#to-do)
 * [Contributing](#contributing)
     * [Contributors](#contributors)
+    * [Semantic versioning](#semantic-versioning)
 * [License](#license)
 
 ---
@@ -282,7 +283,7 @@ To propose your ideas, initiate the discussion by adding a [new issue](https://g
 
 ## Contributing
 
-We hope that you will consider contributing to `nestive-rails`. Please read this short overview for some information about how to get started:
+We hope that you will consider contributing to nestive-rails. Please read this short overview for some information about how to get started:
 
 [Learn more about contributing to this repository](https://github.com/jonhue/nestive-rails/blob/master/CONTRIBUTING.md), [Code of Conduct](https://github.com/jonhue/nestive-rails/blob/master/CODE_OF_CONDUCT.md)
 
@@ -291,6 +292,10 @@ We hope that you will consider contributing to `nestive-rails`. Please read this
 Give the people some :heart: who are working on this project. See them all at:
 
 https://github.com/jonhue/nestive-rails/graphs/contributors
+
+### Semantic Versioning
+
+nestive-rails follows Semantic Versioning 2.0 as defined at http://semver.org.
 
 ## License
 
