@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
     gem.summary               = 'A Better Nested Inheritable Layouts Plugin for Rails 5'
     gem.description           = 'A Better Nested Inheritable Layouts Plugin for Rails 5'
     gem.authors               = ['Jonas Hübotter', 'Justin French', 'Pavel Pravosud']
-    gem.email                 = ['jonas.huebotter@gmail.com', 'justin@indent.com.au', 'pavel@pravosud.com']
+    gem.email                 = ['me@jonhue.me', 'justin@indent.com.au', 'pavel@pravosud.com']
     gem.homepage              = 'https://github.com/jonhue/nestive-rails'
     gem.license               = 'MIT'
 
