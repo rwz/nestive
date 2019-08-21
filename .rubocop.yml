@@ -1,0 +1,14 @@
+AllCops:
+  Exclude:
+    - vendor/**/*
+  TargetRubyVersion: 2.5
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - lib/nestive-rails.rb
+
+Style/Documentation:
+  Enabled: false

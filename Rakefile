@@ -1,10 +1,17 @@
-require 'bundler/gem_tasks'
-require 'rspec/core/rake_task'
+# frozen_string_literal: true
 
-system 'bundle'
-system "gem build nestive-rails.gemspec"
+require 'bundler'
+Bundler::GemHelper.install_tasks
 
+require 'rake'
+require 'rake/testtask'
 
-RSpec::Core::RakeTask.new
+desc 'Default: run unit tests.'
+task default: :test
 
-task default: :spec
+desc 'Test onsignal gem.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
