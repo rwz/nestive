@@ -15,8 +15,8 @@ Gem::Specification.new do |gem|
                               'Rails 5'
   gem.authors               = ['Jonas Hübotter', 'Justin French',
                                'Pavel Pravosud']
-  gem.email                 = ['me@jonhue.me', 'justin@indent.com.au',
-                               'pavel@pravosud.com']
+  gem.email                 = ['jonas.huebotter@gmail.com',
+                               'justin@indent.com.au', 'pavel@pravosud.com']
   gem.homepage              = 'https://github.com/jonhue/nestive-rails'
   gem.license               = 'MIT'
 

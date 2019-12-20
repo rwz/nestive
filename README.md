@@ -1,7 +1,5 @@
 # nestive-rails
 
-[![Gem Version](https://badge.fury.io/rb/nestive-rails.svg)](https://badge.fury.io/rb/nestive-rails) <img src="https://travis-ci.org/jonhue/nestive-rails.svg?branch=master" />
-
 This gem is a continuation for Rails 5 of the [nestive](https://github.com/rwz/nestive) gem originally created by Justin French and Pavel Pravosud.
 
 nestive-rails adds powerful layout and view helpers to your Rails app. It's similar to the nested layout technique [already documented in the Rails guides](http://guides.rubyonrails.org/layouts_and_rendering.html#using-nested-layouts) and found in many other nested layout plugins (a technique using `content_for` and rendering the parent layout at the end of the child layout). There's a bunch of problems with this technique, including:
@@ -17,18 +15,19 @@ nestive-rails is *better* because it addresses these problems.
 
 * [Installation](#installation)
 * [Usage](#usage)
-   * [Declaring an area of content with `area`](#declaring-an-area-of-content-with-area)
-   * [Appending content to an area with `append`](#appending-content-to-an-area-with-append)
-   * [Prepending content to an area with `prepend`](#prepending-content-to-an-area-with-prepend)
-   * [Replacing content with `replace`](#replacing-content-with-replace)
-   * [Removing content with `purge`](#removing-content-with-purge)
-   * [Extending a layout in a child layout (or view) with `extends`](#extending-a-layout-in-a-child-layout-or-view-with-extends)
+  * [Declaring an area of content with `area`](#declaring-an-area-of-content-with-area)
+  * [Appending content to an area with `append`](#appending-content-to-an-area-with-append)
+  * [Prepending content to an area with `prepend`](#prepending-content-to-an-area-with-prepend)
+  * [Replacing content with `replace`](#replacing-content-with-replace)
+  * [Removing content with `purge`](#removing-content-with-purge)
+  * [Extending a layout in a child layout (or view) with `extends`](#extending-a-layout-in-a-child-layout-or-view-with-extends)
 * [Example](#example)
 * [Caching](#caching)
+* [Testing](#testing)
+* [Release](#release)
 * [To Do](#to-do)
 * [Contributing](#contributing)
-    * [Contributors](#contributors)
-    * [Semantic versioning](#semantic-versioning)
+  * [Semantic versioning](#semantic-versioning)
 
 ---
 
@@ -70,7 +69,7 @@ Unlike `yield`, `area` will allow your parent layouts to add content to the area
 <%= area :sidebar, "Some Content Here" %>
 
 <%= area :sidebar do %>
-    Some Content Here
+  Some Content Here
 <% end %>
 ```
 
@@ -82,10 +81,10 @@ The implementation details are quite different, but the `append` helper works mu
 
 ```erb
 <%= extends :application do %>
-    <% append :sidebar, "More content." %>
-    <% append :sidebar do %>
-        More content.
-    <% end %>
+  <% append :sidebar, "More content." %>
+  <% append :sidebar do %>
+    More content.
+  <% end %>
 <% end %>
 ```
 
@@ -95,10 +94,10 @@ Exactly what you think it is. The reverse of `append` (duh), adding the new cont
 
 ``` erb
 <%= extends :application do %>
-    <%= prepend :sidebar, "Content." %>
-    <%= prepend :sidebar do %>
-        Content.
-    <% end %>
+  <%= prepend :sidebar, "Content." %>
+  <%= prepend :sidebar do %>
+    Content.
+  <% end %>
 <% end %>
 ```
 
@@ -108,10 +107,10 @@ You can also replace any content provided by parent layouts:
 
 ``` erb
 <%= extends :application do %>
-    <%= replace :sidebar, "New content." %>
-    <%= replace :sidebar do %>
-        New content.
-    <% end %>
+  <%= replace :sidebar, "New content." %>
+  <%= replace :sidebar do %>
+    New content.
+  <% end %>
 <% end %>
 ```
 
@@ -136,7 +135,7 @@ Any layout (or view) can declare that it wants to inherit from and extend a pare
 
 ``` erb
 <%= extends :application do %>
-   ...
+ ...
 <% end %>
 ```
 
@@ -147,14 +146,14 @@ You can nest many levels deep:
 ``` erb
 <!DOCTYPE html>
 <html>
-    <head>
-        <%= area :head do %>
-            <title><%= area :title, 'Nestive' %></title>
-        <% end %>
-    </head>
-    <body>
-        <%= yield %>
-    </body>
+  <head>
+    <%= area :head do %>
+      <title><%= area :title, 'Nestive' %></title>
+    <% end %>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
 </html>
 ```
 
@@ -162,10 +161,10 @@ You can nest many levels deep:
 
 ``` erb
 <%= extends :application do %>
-    <div class="sidebar"><%= area(:sidebar) do %>
-        here goes sidebar
-    <% end %></div>
-    <%= yield -%>
+  <div class="sidebar"><%= area(:sidebar) do %>
+    here goes sidebar
+  <% end %></div>
+  <%= yield -%>
 <% end %>
 ```
 
@@ -173,16 +172,16 @@ You can nest many levels deep:
 
 ``` erb
 <%= extends :with_sidebar do %>
-    <% append :sidebar do %>
-        Blog archive:
-        <%= render_blog_archive %>
-    <% end %>
+  <% append :sidebar do %>
+    Blog archive:
+    <%= render_blog_archive %>
+  <% end %>
 
-    <% append :head do %>
-        <%= javascript_include_tag 'fancy_blog_archive_tag_cloud' %>
-    <% end %>
+  <% append :head do %>
+    <%= javascript_include_tag 'fancy_blog_archive_tag_cloud' %>
+  <% end %>
 
-    <%= yield %>
+  <%= yield %>
 <% end %>
 ```
 
@@ -197,28 +196,28 @@ Set-up a global layout defining some content areas.
 ``` erb
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title><%= area :title, "JustinFrench.com" %></title>
-        <meta name="description" content="<%= area :description, "This is my website." %>">
-        <meta name="keywords" content="<%= area :keywords, "justin, french, ruby, design" %>">
-    </head>
-    <body>
-        <div id="wrapper">
-            <div id="content">
-                <%= area :content do %>
-                    <p>Default content goes here.</p>
-                <% end %>
-            </div>
-            <div id="sidebar">
-                <%= area :sidebar do %>
-                    <h2>About Me</h2>
-                    <p>...</p>
-                <% end %>
-            </div>
-        </div>
-        <%= yield %>
-    </body>
+  <head>
+    <meta charset="utf-8">
+    <title><%= area :title, "JustinFrench.com" %></title>
+    <meta name="description" content="<%= area :description, "This is my website." %>">
+    <meta name="keywords" content="<%= area :keywords, "justin, french, ruby, design" %>">
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="content">
+        <%= area :content do %>
+          <p>Default content goes here.</p>
+        <% end %>
+      </div>
+      <div id="sidebar">
+        <%= area :sidebar do %>
+          <h2>About Me</h2>
+          <p>...</p>
+        <% end %>
+      </div>
+    </div>
+    <%= yield %>
+  </body>
 </html>
 ```
 
@@ -229,10 +228,10 @@ appending & prepending content to the areas we defined earlier.
 
 ``` erb
 <%= extends :application do %>
-    <% replace :title, "My Blog – " %>
-    <% replace :description, "Justin French blogs here on Ruby, Rails, Design, Formtastic, etc" %>
-    <% prepend :keywords, "blog, weblog, design links, ruby links, formtastic release notes, " %>
-    <%= yield %>
+  <% replace :title, "My Blog – " %>
+  <% replace :description, "Justin French blogs here on Ruby, Rails, Design, Formtastic, etc" %>
+  <% prepend :keywords, "blog, weblog, design links, ruby links, formtastic release notes, " %>
+  <%= yield %>
 <% end %>
 ```
 
@@ -244,13 +243,13 @@ content specific to the index action.
 
 ``` erb
 <% replace :content do %>
-    <h1>My Blog</h1>
-    <%= render @articles %>
+  <h1>My Blog</h1>
+  <%= render @articles %>
 <% end %>
 
 <% append :sidebar do %>
-    <h2>Blog Roll</h2>
-    <%= render @links %>
+  <h2>Blog Roll</h2>
+  <%= render @links %>
 <% end %>
 ```
 
@@ -260,7 +259,7 @@ We also need to instruct the `PostsController` to use this `blog` layout:
 
 ``` ruby
 class PostsController < ApplicationController
-    layout 'blog'
+  layout 'blog'
 end
 ```
 
@@ -272,11 +271,32 @@ nestive-rails works the same way `content_for` does and has the same caching dra
 
 ---
 
-## To Do
+## Testing
 
-[Here](https://github.com/jonhue/nestive-rails/projects/1) is the full list of current projects.
+1. Fork this repository
+2. Clone your forked git locally
+3. Install dependencies
 
-To propose your ideas, initiate the discussion by adding a [new issue](https://github.com/jonhue/nestive-rails/issues/new).
+    `$ bundle install`
+
+4. Run tests
+
+    `$ bundle exec rake test`
+
+5. Run RuboCop
+
+    `$ bundle exec rubocop`
+
+---
+
+## Release
+
+1. Review breaking changes and deprecations in `CHANGELOG.md`
+2. Change the gem version in `lib/nestive-rails/version.rb`
+3. Reset `CHANGELOG.md`
+4. Create a pull request to merge the changes into `master`
+5. After the pull request was merged, create a new release listing the breaking changes and commits on `master` since the last release.
+6. The release workflow will publish the gems to RubyGems and the GitHub Package Registry
 
 ---
 
@@ -285,12 +305,6 @@ To propose your ideas, initiate the discussion by adding a [new issue](https://g
 We hope that you will consider contributing to nestive-rails. Please read this short overview for some information about how to get started:
 
 [Learn more about contributing to this repository](https://github.com/jonhue/nestive-rails/blob/master/CONTRIBUTING.md), [Code of Conduct](https://github.com/jonhue/nestive-rails/blob/master/CODE_OF_CONDUCT.md)
-
-### Contributors
-
-Give the people some :heart: who are working on this project. See them all at:
-
-https://github.com/jonhue/nestive-rails/graphs/contributors
 
 ### Semantic Versioning
 

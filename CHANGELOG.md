@@ -1,14 +1,13 @@
 # Changelog
 
-### master
+This file tracks all unreleased breaking changes and deprecations on `master`. You can find a list of all releases [here](https://github.com/jonhue/nestive-rails/releases).
 
-* nothing yet
+nestive-rails follows Semantic Versioning 2.0 as defined at http://semver.org.
 
-### 1.0.1 - 2018-01-06
+### Breaking Changes
 
-* enhancements
-    * cleaning up gem files
+* None
 
-### 1.0.0 - 2017-12-19
+### Deprecated
 
-* initial release
+* None
