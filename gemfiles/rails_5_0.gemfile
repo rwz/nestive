@@ -2,9 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "combustion", "~> 0.5.4"
 gem "rspec-rails", "~> 3.5"
-gem "appraisal", "~> 2.1"
 gem "rails", "~> 5.0.0"
 
-gemspec :path => "../"
+gemspec path: "../"
