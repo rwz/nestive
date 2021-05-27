@@ -6,8 +6,22 @@ gemfile:
   - gemfiles/rails_5_0.gemfile
 
 rvm:
+  - 3.0
+  - 2.7
+  - 2.6
+  - 2.5
+  - 2.4
   - 2.3.1
   - 2.2.2
 
 matrix:
   fast_finish: true
+  exclude:
+    - rvm: 3.0
+      gemfile: gemfiles/rails_5_0.gemfile
+    - rvm: 2.7
+      gemfile: gemfiles/rails_5_0.gemfile
+    - rvm: 2.6
+      gemfile: gemfiles/rails_5_0.gemfile
+    - rvm: 2.5
+      gemfile: gemfiles/rails_5_0.gemfile
