@@ -20,6 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency "activesupport", ">= 3.1.0"
   s.add_dependency "railties",      ">= 3.1.0"
 
-  s.add_development_dependency "combustion", "~> 0.5.4"
+  s.add_development_dependency "combustion", "~> 1.3"
   s.add_development_dependency "appraisal",  "~> 2.1"
 end
