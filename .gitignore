@@ -3,3 +3,4 @@ doc
 .yardoc
 pkg
 Gemfile.lock
+gemfiles/*.lock

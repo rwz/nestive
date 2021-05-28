@@ -14,9 +14,12 @@ Gem::Specification.new do |s|
   s.files         = Dir["README.md", "MIT-LICENSE", "lib/**/*"]
   s.require_path  = "lib"
 
-  s.required_ruby_version = ">= 1.9.3"
+  s.required_ruby_version = ">= 2.2.2"
 
-  s.add_dependency "actionview",    ">= 3.1.0"
-  s.add_dependency "activesupport", ">= 3.1.0"
-  s.add_dependency "railties",      ">= 3.1.0"
+  s.add_dependency "actionview",    ">= 5.0.0"
+  s.add_dependency "activesupport", ">= 5.0.0"
+  s.add_dependency "railties",      ">= 5.0.0"
+
+  s.add_development_dependency "combustion", "~> 1.3"
+  s.add_development_dependency "appraisal",  "~> 2.1"
 end

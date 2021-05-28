@@ -91,7 +91,7 @@ module Nestive
       # Capture the content to be placed inside the extended layout
       @view_flow.get(:layout).replace capture(&block).to_s
 
-      render file: layout
+      render template: layout
     end
 
     # Defines an area of content in your layout that can be modified or replaced by child layouts
